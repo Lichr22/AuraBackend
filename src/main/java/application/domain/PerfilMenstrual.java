@@ -7,18 +7,13 @@ public class PerfilMenstrual {
 
     Scanner sc = new Scanner(System.in);
 
-    // PerfilMenstrual Atributes
-
     private int idPerfil;
     private Usuario usuario;
-    private Integer edad;
-    private Integer cicloPromedio;
-    private Integer duracionPeriodoPromedio;
+    private int edad;
+    private int cicloPromedio;
+    private int duracionPeriodoPromedio;
     private Boolean usaAnticonceptivo;
     private String tipoAnticonceptivo;
-
-
-    // Constructors
 
     public PerfilMenstrual() {
     }
@@ -34,9 +29,6 @@ public class PerfilMenstrual {
         this.usaAnticonceptivo = usaAnticonceptivo;
         this.tipoAnticonceptivo = tipoAnticonceptivo;
     }
-
-
-    // Getters and Setters
 
     public int getIdPerfil() {
         return idPerfil;
@@ -93,9 +85,6 @@ public class PerfilMenstrual {
     public void setTipoAnticonceptivo(String tipoAnticonceptivo) {
         this.tipoAnticonceptivo = tipoAnticonceptivo;
     }
-
-
-    // Class Methods
 
     public PerfilMenstrual createPerfil(PerfilMenstrual perfil){
 
