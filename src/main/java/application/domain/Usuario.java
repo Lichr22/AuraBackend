@@ -8,8 +8,6 @@ public class Usuario {
 
     Scanner sc = new Scanner(System.in);
 
-    // Usuario Atributes
-
     private int idUsuario;
     private String nombre;
     private String email;
@@ -18,9 +16,6 @@ public class Usuario {
     private String codigoVinculacion;
     private LocalDateTime fechaRegistro;
     private String estadoCuenta;
-
-
-    // Constructors
 
     public Usuario() {
     }
@@ -38,9 +33,6 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
         this.estadoCuenta = estadoCuenta;
     }
-
-
-    // Getters and Setters
 
     public int getIdUsuario() {
         return idUsuario;
@@ -106,8 +98,6 @@ public class Usuario {
         this.estadoCuenta = estadoCuenta;
     }
 
-
-    // Class Methods
 
     public Usuario createUser(Usuario usuario){
 
