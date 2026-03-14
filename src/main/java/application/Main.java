@@ -1,9 +1,6 @@
 package application;
 
-import application.domain.Usuario;
-import application.domain.PerfilMenstrual;
-import application.domain.Ciclo;
-import application.domain.RegistroDiario;
+import application.domain.*;
 
 public class Main {
 
@@ -41,6 +38,28 @@ public class Main {
         registroDiario.setCiclo(ciclo);
         registroDiario.createRegistro(registroDiario);
         registroDiario.getRegistroById(1, registroDiario);
+
+        PermisosCompartidos permisosCompartidos = new PermisosCompartidos();
+        permisosCompartidos.createPermiso(permisosCompartidos);
+        permisosCompartidos.getPermisoById(1, permisosCompartidos);
+        RecomendacionIA recomendacionIA = new RecomendacionIA();
+        recomendacionIA.createRecomendacion(recomendacionIA);
+        recomendacionIA.getRecomendacionById(1, recomendacionIA);
+
+        RecomendacionIA recomendacionIA1 = new RecomendacionIA();
+        recomendacionIA1.getRecomendacionById(1, recomendacionIA);
+        recomendacionIA1.deleteRecomendacion(1);
+        recomendacionIA1.getAllRecomendaciones();
+        recomendacionIA1.updateRecomendacion(recomendacionIA);
+        recomendacionIA1.createRecomendacion(recomendacionIA);
+
+        VinculoPareja vinculoPareja = new VinculoPareja();
+        vinculoPareja.createVinculo(vinculoPareja);
+        vinculoPareja.getVinculoById(1, vinculoPareja);
+        vinculoPareja.deleteVinculo(1);
+        vinculoPareja.getAllVinculos();
+        vinculoPareja.updateVinculo(vinculoPareja);
+
 
     }
 }
