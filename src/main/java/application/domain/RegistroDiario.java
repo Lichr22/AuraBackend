@@ -16,6 +16,8 @@ public class RegistroDiario {
     private String calidadSueno;
     private String notasLibres;
 
+    // Constructors
+
     public RegistroDiario() {
 
     }
@@ -36,6 +38,8 @@ public class RegistroDiario {
     public RegistroDiario(int idRegistro) {
         this.idRegistro = idRegistro;
     }
+
+    // Getters and Setters
 
     public int getIdRegistro() {
         return idRegistro;
@@ -100,6 +104,8 @@ public class RegistroDiario {
     public void setNotasLibres(String notasLibres) {
         this.notasLibres = notasLibres;
     }
+
+    // Methods
 
     public RegistroDiario createRegistro(RegistroDiario registro){
 
