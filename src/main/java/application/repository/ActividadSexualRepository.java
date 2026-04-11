@@ -1,8 +1,10 @@
-package application.domain;
+package application.repository;
+
+import application.domain.RegistroDiario;
 
 import java.util.Scanner;
 
-public class ActividadSexual {
+public class ActividadSexualRepository {
 
     Scanner sc = new Scanner(System.in);
 
@@ -14,11 +16,11 @@ public class ActividadSexual {
 
     // CONSTRUCTORES
     //Vacio
-    public ActividadSexual() {
+    public ActividadSexualRepository() {
     }
 
     // Constructor con todos los atributos
-    public ActividadSexual(int idActividad, RegistroDiario registroDiario, Boolean usoPreservativo, Boolean orgasmo, String metodoAdicional) {
+    public ActividadSexualRepository(int idActividad, RegistroDiario registroDiario, Boolean usoPreservativo, Boolean orgasmo, String metodoAdicional) {
         this.idActividad = idActividad;
         this.registroDiario = registroDiario;
         this.usoPreservativo = usoPreservativo;
@@ -27,7 +29,7 @@ public class ActividadSexual {
     }
 
     // Constructor con solo ID
-    public ActividadSexual(int idActividad) {
+    public ActividadSexualRepository(int idActividad) {
         this.idActividad = idActividad;
     }
 
@@ -56,7 +58,7 @@ public class ActividadSexual {
     // METODOS
     //Create
 
-    public ActividadSexual createActividadSexual(ActividadSexual actividad){
+    public ActividadSexualRepository createActividadSexual(ActividadSexualRepository actividad){
 
         System.out.println("Ingrese el id de la actividad sexual");
         int idActividad = sc.nextInt();

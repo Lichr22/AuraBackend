@@ -1,10 +1,12 @@
-package application.domain;
+package application.repository;
 
+
+import application.domain.Usuario;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class Prediccion {
+public class PrediccionRepository {
 
     Scanner sc = new Scanner(System.in);
 
@@ -18,13 +20,13 @@ public class Prediccion {
 
     // CONSTRUCTORES
 //Vacio
-    public Prediccion() {
+    public PrediccionRepository() {
     }
 
     //Con atributos
-    public Prediccion(int idPrediccion, Usuario usuario, LocalDate fechaCalculo,
-                      LocalDate proximaMenstruacionEstimada, LocalDate inicioVentanaFertil,
-                      LocalDate finVentanaFertil, String probabilidadEmbarazo) {
+    public PrediccionRepository(int idPrediccion, Usuario usuario, LocalDate fechaCalculo,
+                                LocalDate proximaMenstruacionEstimada, LocalDate inicioVentanaFertil,
+                                LocalDate finVentanaFertil, String probabilidadEmbarazo) {
 
         this.idPrediccion = idPrediccion;
         this.usuario = usuario;
@@ -36,7 +38,7 @@ public class Prediccion {
     }
 
     //Solo ID
-    public Prediccion(int idPrediccion) {
+    public PrediccionRepository(int idPrediccion) {
         this.idPrediccion = idPrediccion;
     }
 
@@ -100,7 +102,7 @@ public class Prediccion {
 
 // METODOS
 
-    public Prediccion createPrediccion(Prediccion prediccion) {
+    public PrediccionRepository createPrediccion(PrediccionRepository prediccion) {
 
         System.out.println("Ingrese el id de la prediccion");
         int idPrediccion = sc.nextInt();

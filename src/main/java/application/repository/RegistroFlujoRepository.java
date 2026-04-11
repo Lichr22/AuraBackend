@@ -1,8 +1,10 @@
-package application.domain;
+package application.repository;
+
+import application.domain.RegistroDiario;
 
 import java.util.Scanner;
 
-public class RegistroFlujo {
+public class RegistroFlujoRepository {
 
     Scanner sc = new Scanner(System.in);
 
@@ -14,11 +16,11 @@ public class RegistroFlujo {
 
     //CONSTRUCTORES
 //Vacio
-    public RegistroFlujo() {
+    public RegistroFlujoRepository() {
     }
 
     //Con los atributos
-    public RegistroFlujo(int idFlujo, RegistroDiario registro, String tipoTextura, String color, String cantidad) {
+    public RegistroFlujoRepository(int idFlujo, RegistroDiario registro, String tipoTextura, String color, String cantidad) {
         this.idFlujo = idFlujo;
         this.registro = registro;
         this.tipoTextura = tipoTextura;
@@ -27,7 +29,7 @@ public class RegistroFlujo {
     }
 
     //Solo ID
-    public RegistroFlujo(int idFlujo) {
+    public RegistroFlujoRepository(int idFlujo) {
         this.idFlujo = idFlujo;
     }
 
@@ -55,7 +57,7 @@ public class RegistroFlujo {
 
 // METODOS
 
-    public RegistroFlujo createRegistroFlujo(RegistroFlujo flujo){
+    public RegistroFlujoRepository createRegistroFlujo(RegistroFlujoRepository flujo){
 
         System.out.println("Ingrese el id del flujo");
         int idFlujo = sc.nextInt();
