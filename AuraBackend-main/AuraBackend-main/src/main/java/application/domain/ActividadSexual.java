@@ -1,5 +1,6 @@
 package application.domain;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ActividadSexual {
@@ -59,23 +60,40 @@ public class ActividadSexual {
     public ActividadSexual createActividadSexual(ActividadSexual actividad){
 
         System.out.println("Ingrese el id de la actividad sexual");
-        int idActividad = sc.nextInt();
-        actividad.idActividad = idActividad;
-        sc.nextLine();
+        try {
+            int idActividad = sc.nextInt();
+            actividad.idActividad = idActividad;
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: El id debe ser un número entero.");
+            sc.nextLine();
+            return null;
+        }
 
         System.out.println("¿Se usó preservativo? (true/false)");
-        boolean usoPreservativo = sc.nextBoolean();
-        actividad.usoPreservativo = usoPreservativo;
-        sc.nextLine();
+        try {
+            boolean usoPreservativo = sc.nextBoolean();
+            actividad.usoPreservativo = usoPreservativo;
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Ingrese 'true' o 'false'.");
+            sc.nextLine();
+            return null;
+        }
 
         System.out.println("¿Hubo orgasmo? (true/false)");
-        boolean orgasmo = sc.nextBoolean();
-        actividad.orgasmo = orgasmo;
-        sc.nextLine();
+        try {
+            boolean orgasmo = sc.nextBoolean();
+            actividad.orgasmo = orgasmo;
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Ingrese 'true' o 'false'.");
+            sc.nextLine();
+            return null;
+        }
 
         System.out.println("Ingrese método anticonceptivo adicional");
-        String metodoAdicional = sc.nextLine();
-        actividad.metodoAdicional = metodoAdicional;
+        actividad.metodoAdicional = sc.nextLine();
 
         return actividad;
     }

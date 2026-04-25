@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -66,15 +68,15 @@ public class RecomendacionIA {
     }
 
     public RecomendacionIA createRecomendacion(RecomendacionIA recomendacion) {
-        System.out.println("Ingrese el titulo de la recomendacion");
-        recomendacion.titulo = sc.nextLine();
-
-        System.out.println("Ingrese el contenido de la recomendacion");
-        recomendacion.contenido = sc.nextLine();
-
-        recomendacion.fechaCreacion = LocalDateTime.now();
-
-        return recomendacion;
+        try {
+            recomendacion.titulo = FormValidationUtil.validateString("Ingrese el título de la recomendación:");
+            recomendacion.contenido = FormValidationUtil.validateString("Ingrese el contenido de la recomendación:");
+            recomendacion.fechaCreacion = LocalDateTime.now();
+            return recomendacion;
+        } catch (Exception e) {
+            System.out.println("Error al registrar la recomendación: " + e.getMessage());
+            return null;
+        }
     }
 
     public RecomendacionIA updateRecomendacion(RecomendacionIA recomendacion) {

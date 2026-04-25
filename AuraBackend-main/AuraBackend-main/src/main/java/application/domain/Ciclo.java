@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -88,29 +90,17 @@ public class Ciclo {
 
     public Ciclo createCiclo(Ciclo ciclo){
 
-        System.out.println("Ingrese el id del ciclo");
-        int id = sc.nextInt();
-        ciclo.idCiclo = id;
-        sc.nextLine();
-
-        System.out.println("Ingrese la fecha de inicio (AAAA-MM-DD)");
-        String fechaInicio = sc.nextLine();
-        ciclo.fechaInicio = LocalDate.parse(fechaInicio);
-
-        System.out.println("Ingrese la fecha de fin (AAAA-MM-DD)");
-        String fechaFin = sc.nextLine();
-        ciclo.fechaFin = LocalDate.parse(fechaFin);
-
-        System.out.println("Ingrese la duración total del ciclo");
-        int duracion = sc.nextInt();
-        ciclo.duracionTotal = duracion;
-        sc.nextLine();
-
-        System.out.println("¿El ciclo es regular? (true/false)");
-        boolean regular = sc.nextBoolean();
-        ciclo.esRegular = regular;
-
-        return ciclo;
+        try {
+            ciclo.idCiclo = FormValidationUtil.validateInt("Ingrese el id del ciclo:");
+            ciclo.fechaInicio = FormValidationUtil.validateLocalDate("Ingrese la fecha de inicio");
+            ciclo.fechaFin = FormValidationUtil.validateLocalDate("Ingrese la fecha de fin");
+            ciclo.duracionTotal = FormValidationUtil.validateInt("Ingrese la duración total del ciclo:");
+            ciclo.esRegular = FormValidationUtil.validateBoolean("¿El ciclo es regular? (true/false):");
+            return ciclo;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el ciclo: " + e.getMessage());
+            return null;
+        }
     }
 
     public void getCicloById(int id , Ciclo ciclo){

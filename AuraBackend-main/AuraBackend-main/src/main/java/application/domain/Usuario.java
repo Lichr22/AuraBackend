@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -101,33 +103,19 @@ public class Usuario {
 
     public Usuario createUser(Usuario usuario){
 
-        System.out.println("Ingrese el nombre del usuario");
-        String nombre = sc.nextLine();
-        usuario.nombre = nombre;
-
-        System.out.println("Ingrese el email");
-        String email = sc.nextLine();
-        usuario.email = email;
-
-        System.out.println("Ingrese la contraseña (hash)");
-        String contrasenaHash = sc.nextLine();
-        usuario.contrasenaHash = contrasenaHash;
-
-        System.out.println("Ingrese el rol del usuario");
-        String rol = sc.nextLine();
-        usuario.rol = rol;
-
-        System.out.println("Ingrese el codigo de vinculacion");
-        String codigo = sc.nextLine();
-        usuario.codigoVinculacion = codigo;
-
-        System.out.println("Ingrese el estado de la cuenta");
-        String estado = sc.nextLine();
-        usuario.estadoCuenta = estado;
-
-        usuario.fechaRegistro = LocalDateTime.now();
-
-        return usuario;
+        try {
+            usuario.nombre = FormValidationUtil.validateString("Ingrese el nombre del usuario:");
+            usuario.email = FormValidationUtil.validateString("Ingrese el email:");
+            usuario.contrasenaHash = FormValidationUtil.validateString("Ingrese la contraseña (hash):");
+            usuario.rol = FormValidationUtil.validateString("Ingrese el rol del usuario:");
+            usuario.codigoVinculacion = FormValidationUtil.validateString("Ingrese el código de vinculación:");
+            usuario.estadoCuenta = FormValidationUtil.validateString("Ingrese el estado de la cuenta:");
+            usuario.fechaRegistro = LocalDateTime.now();
+            return usuario;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el usuario: " + e.getMessage());
+            return null;
+        }
     }
 
     public Usuario updateUser(Usuario usuario){

@@ -2,6 +2,8 @@ package application.domain;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Prediccion {
@@ -103,29 +105,54 @@ public class Prediccion {
     public Prediccion createPrediccion(Prediccion prediccion) {
 
         System.out.println("Ingrese el id de la prediccion");
-        int idPrediccion = sc.nextInt();
-        prediccion.idPrediccion = idPrediccion;
-        sc.nextLine();
+        try {
+            int idPrediccion = sc.nextInt();
+            prediccion.idPrediccion = idPrediccion;
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: El id debe ser un número entero.");
+            sc.nextLine();
+            return null;
+        }
 
         System.out.println("Ingrese la fecha de cálculo (AAAA-MM-DD)");
-        String fechaCalculo = sc.nextLine();
-        prediccion.fechaCalculo = LocalDate.parse(fechaCalculo);
+        try {
+            String fechaCalculo = sc.nextLine();
+            prediccion.fechaCalculo = LocalDate.parse(fechaCalculo);
+        } catch (DateTimeParseException e) {
+            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
+            return null;
+        }
 
         System.out.println("Ingrese la próxima menstruación estimada (AAAA-MM-DD)");
-        String proximaMenstruacion = sc.nextLine();
-        prediccion.proximaMenstruacionEstimada = LocalDate.parse(proximaMenstruacion);
+        try {
+            String proximaMenstruacion = sc.nextLine();
+            prediccion.proximaMenstruacionEstimada = LocalDate.parse(proximaMenstruacion);
+        } catch (DateTimeParseException e) {
+            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
+            return null;
+        }
 
         System.out.println("Ingrese inicio de la ventana fértil (AAAA-MM-DD)");
-        String inicioVentana = sc.nextLine();
-        prediccion.inicioVentanaFertil = LocalDate.parse(inicioVentana);
+        try {
+            String inicioVentana = sc.nextLine();
+            prediccion.inicioVentanaFertil = LocalDate.parse(inicioVentana);
+        } catch (DateTimeParseException e) {
+            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
+            return null;
+        }
 
         System.out.println("Ingrese fin de la ventana fértil (AAAA-MM-DD)");
-        String finVentana = sc.nextLine();
-        prediccion.finVentanaFertil = LocalDate.parse(finVentana);
+        try {
+            String finVentana = sc.nextLine();
+            prediccion.finVentanaFertil = LocalDate.parse(finVentana);
+        } catch (DateTimeParseException e) {
+            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
+            return null;
+        }
 
         System.out.println("Ingrese probabilidad de embarazo");
-        String probabilidad = sc.nextLine();
-        prediccion.probabilidadEmbarazo = probabilidad;
+        prediccion.probabilidadEmbarazo = sc.nextLine();
 
         return prediccion;
     }

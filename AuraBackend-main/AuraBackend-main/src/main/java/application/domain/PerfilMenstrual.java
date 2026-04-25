@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -88,50 +90,24 @@ public class PerfilMenstrual {
 
     public PerfilMenstrual createPerfil(PerfilMenstrual perfil){
 
-        System.out.println("Ingrese la edad");
-        perfil.edad = sc.nextInt();
-        sc.nextLine();
 
-        System.out.println("Ingrese el ciclo promedio (dias)");
-        perfil.cicloPromedio = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Ingrese la duracion promedio del periodo (dias)");
-        perfil.duracionPeriodoPromedio = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Usa anticonceptivo? (true/false)");
-        perfil.usaAnticonceptivo = sc.nextBoolean();
-        sc.nextLine();
-
-        System.out.println("Ingrese el tipo de anticonceptivo");
-        perfil.tipoAnticonceptivo = sc.nextLine();
 
         return perfil;
     }
 
     public PerfilMenstrual updatePerfil(PerfilMenstrual perfil){
 
-        System.out.println("Actualizar edad");
-        perfil.edad = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Actualizar ciclo promedio");
-        perfil.cicloPromedio = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Actualizar duracion del periodo");
-        perfil.duracionPeriodoPromedio = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Actualizar si usa anticonceptivo (true/false)");
-        perfil.usaAnticonceptivo = sc.nextBoolean();
-        sc.nextLine();
-
-        System.out.println("Actualizar tipo anticonceptivo");
-        perfil.tipoAnticonceptivo = sc.nextLine();
-
-        return perfil;
+        try {
+            perfil.edad = FormValidationUtil.validateInt("Ingrese la edad:");
+            perfil.cicloPromedio = FormValidationUtil.validateInt("Ingrese el ciclo promedio (dias):");
+            perfil.duracionPeriodoPromedio = FormValidationUtil.validateInt("Ingrese la duración promedio del periodo (dias):");
+            perfil.usaAnticonceptivo = FormValidationUtil.validateBoolean("¿Usa anticonceptivo? (true/false):");
+            perfil.tipoAnticonceptivo = FormValidationUtil.validateString("Ingrese el tipo de anticonceptivo:");
+            return perfil;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el perfil menstrual: " + e.getMessage());
+            return null;
+        }
     }
 
     public List<PerfilMenstrual> getAllPerfiles(){

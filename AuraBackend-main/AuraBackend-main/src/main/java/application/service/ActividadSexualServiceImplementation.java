@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.ActividadSexual;
+import application.service.outputs.ActividadSexualService;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class ActividadSexualServiceImplementation implements ActividadSexualServ
 
     @Override
     public ActividadSexual createActividadSexual(ActividadSexual actividad) {
+        actividad.createActividadSexual(actividad);
         return actividad;
     }
 

@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.PermisosCompartidos;
+import application.service.outputs.PermisosCompartidosService;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class PermisosCompartidosServiceImplementation implements PermisosCompart
 
     @Override
     public PermisosCompartidos createPermiso(PermisosCompartidos permiso) {
+        permiso.createPermiso(permiso);
         return permiso;
     }
 

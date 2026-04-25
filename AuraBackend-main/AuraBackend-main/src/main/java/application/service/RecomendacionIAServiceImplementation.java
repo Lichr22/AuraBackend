@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.RecomendacionIA;
+import application.service.outputs.RecomendacionIAService;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class RecomendacionIAServiceImplementation implements RecomendacionIAServ
 
     @Override
     public RecomendacionIA createRecomendacion(RecomendacionIA recomendacion) {
+        recomendacion.createRecomendacion(recomendacion);
         return recomendacion;
     }
 

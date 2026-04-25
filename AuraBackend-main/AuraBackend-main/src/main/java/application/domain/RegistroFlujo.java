@@ -1,10 +1,12 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.util.Scanner;
 
 public class RegistroFlujo {
 
-    Scanner sc = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
 
     private int idFlujo;
     private RegistroDiario registro;
@@ -55,26 +57,18 @@ public class RegistroFlujo {
 
 // METODOS
 
-    public RegistroFlujo createRegistroFlujo(RegistroFlujo flujo){
+    public static RegistroFlujo createRegistroFlujo(RegistroFlujo flujo){
 
-        System.out.println("Ingrese el id del flujo");
-        int idFlujo = sc.nextInt();
-        flujo.idFlujo = idFlujo;
-        sc.nextLine();
-
-        System.out.println("Ingrese el tipo de textura del flujo");
-        String tipoTextura = sc.nextLine();
-        flujo.tipoTextura = tipoTextura;
-
-        System.out.println("Ingrese el color del flujo");
-        String color = sc.nextLine();
-        flujo.color = color;
-
-        System.out.println("Ingrese la cantidad del flujo");
-        String cantidad = sc.nextLine();
-        flujo.cantidad = cantidad;
-
-        return flujo;
+        try {
+            flujo.idFlujo = FormValidationUtil.validateInt("Ingrese el id del flujo:");
+            flujo.tipoTextura = FormValidationUtil.validateString("Ingrese el tipo de textura del flujo:");
+            flujo.color = FormValidationUtil.validateString("Ingrese el color del flujo:");
+            flujo.cantidad = FormValidationUtil.validateString("Ingrese la cantidad del flujo:");
+            return flujo;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el flujo: " + e.getMessage());
+            return null;
+        }
     }
 
 //Get

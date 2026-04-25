@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,13 +41,14 @@ public class PermisosCompartidos {
     public void setEstado(String estado) { this.estado = estado; }
 
     public PermisosCompartidos createPermiso(PermisosCompartidos permiso) {
-        System.out.println("Ingrese el nivel de acceso del permiso");
-        permiso.nivelAcceso = sc.nextLine();
-
-        System.out.println("Ingrese el estado del permiso");
-        permiso.estado = sc.nextLine();
-
-        return permiso;
+        try {
+            permiso.nivelAcceso = FormValidationUtil.validateString("Ingrese el nivel de acceso del permiso:");
+            permiso.estado = FormValidationUtil.validateString("Ingrese el estado del permiso:");
+            return permiso;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el permiso: " + e.getMessage());
+            return null;
+        }
     }
 
     public PermisosCompartidos updatePermiso(PermisosCompartidos permiso) {

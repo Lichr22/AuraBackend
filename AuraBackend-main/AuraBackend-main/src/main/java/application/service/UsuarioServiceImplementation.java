@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.Usuario;
+import application.service.outputs.UsuarioService;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class UsuarioServiceImplementation implements UsuarioService {
 
     @Override
     public Usuario createUsuario(Usuario usuario){
-
+        usuario.createUser(usuario);
         return usuario;
     }
 

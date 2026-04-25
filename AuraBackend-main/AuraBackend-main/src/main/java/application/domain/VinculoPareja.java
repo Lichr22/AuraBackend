@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -66,12 +68,14 @@ public class VinculoPareja {
     }
 
     public VinculoPareja createVinculo(VinculoPareja vinculo) {
-        System.out.println("Ingrese el estado del vinculo");
-        vinculo.estadoVinculo = sc.nextLine();
-
-        vinculo.fechaVinculacion = LocalDate.now();
-
-        return vinculo;
+        try {
+            vinculo.estadoVinculo = FormValidationUtil.validateString("Ingrese el estado del vínculo:");
+            vinculo.fechaVinculacion = LocalDate.now();
+            return vinculo;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el vínculo: " + e.getMessage());
+            return null;
+        }
     }
 
     public VinculoPareja updateVinculo(VinculoPareja vinculo) {

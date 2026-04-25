@@ -1,5 +1,7 @@
 package application.domain;
 
+import application.util.FormValidationUtil;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -109,34 +111,19 @@ public class RegistroDiario {
 
     public RegistroDiario createRegistro(RegistroDiario registro){
 
-        System.out.println("Ingrese el id del registro");
-        int id = sc.nextInt();
-        registro.idRegistro = id;
-        sc.nextLine();
+        try {
+            registro.idRegistro = FormValidationUtil.validateInt("Ingrese el id del registro:");
+            registro.fecha = FormValidationUtil.validateLocalDate("Ingrese la fecha");
+            registro.temperaturaBasal = FormValidationUtil.validateDouble("Ingrese la temperatura basal:");
+            registro.peso = FormValidationUtil.validateDouble("Ingrese el peso:");
+            registro.calidadSueno = FormValidationUtil.validateString("Ingrese la calidad del sueño:");
+            registro.notasLibres = FormValidationUtil.validateString("Ingrese notas libres:");
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error al registrar el registro diario: " + e.getMessage());
+            return null;
+        }
 
-        System.out.println("Ingrese la fecha (AAAA-MM-DD)");
-        String fecha = sc.nextLine();
-        registro.fecha = LocalDate.parse(fecha);
-
-        System.out.println("Ingrese temperatura basal");
-        double temperatura = sc.nextDouble();
-        registro.temperaturaBasal = temperatura;
-        sc.nextLine();
-
-        System.out.println("Ingrese el peso");
-        double peso = sc.nextDouble();
-        registro.peso = peso;
-        sc.nextLine();
-
-        System.out.println("Ingrese la calidad del sueño");
-        String sueno = sc.nextLine();
-        registro.calidadSueno = sueno;
-
-        System.out.println("Ingrese notas libres");
-        String notas = sc.nextLine();
-        registro.notasLibres = notas;
-
-        return registro;
     }
 
     public void getRegistroById(int id , RegistroDiario registro){

@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.RegistroDiario;
+import application.service.outputs.RegistroDiarioService;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class RegistroDiarioServiceImplementation implements RegistroDiarioServic
 
     @Override
     public RegistroDiario createRegistro(RegistroDiario registro) {
+        registro.createRegistro(registro);
         return registro;
     }
 

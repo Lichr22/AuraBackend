@@ -2,7 +2,7 @@ package application.config;
 
 import application.domain.*;
 import application.service.*;
-import application.ui.MenuApp;
+import application.userinterface.MenuApp;
 import application.view.*;
 
 public class Config {
