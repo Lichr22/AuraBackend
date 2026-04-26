@@ -10,8 +10,10 @@ public interface PermisosCompartidosService {
 
     PermisosCompartidos updatePermiso(PermisosCompartidos permiso);
 
-    void deletePermiso(Long id);
+    void getPermisoById(Long id, PermisosCompartidos permiso);
 
-    List<PermisosCompartidos> getPermisoById(Long id);
+    void getAllPermisos(List<PermisosCompartidos> permisos, PermisosCompartidos permiso);
+
+    void deletePermiso(Long id);
 
 }

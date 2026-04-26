@@ -4,11 +4,8 @@ import application.util.FormValidationUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Scanner;
 
 public class RecomendacionIA {
-
-    Scanner sc = new Scanner(System.in);
 
     Long idRecomendacion;
     Usuario usuario;
@@ -72,6 +69,7 @@ public class RecomendacionIA {
             recomendacion.titulo = FormValidationUtil.validateString("Ingrese el título de la recomendación:");
             recomendacion.contenido = FormValidationUtil.validateString("Ingrese el contenido de la recomendación:");
             recomendacion.fechaCreacion = LocalDateTime.now();
+            System.out.println("Recomendación creada exitosamente.");
             return recomendacion;
         } catch (Exception e) {
             System.out.println("Error al registrar la recomendación: " + e.getMessage());
@@ -80,28 +78,38 @@ public class RecomendacionIA {
     }
 
     public RecomendacionIA updateRecomendacion(RecomendacionIA recomendacion) {
-        System.out.println("Actualizar titulo");
-        recomendacion.titulo = sc.nextLine();
-
-        System.out.println("Actualizar contenido");
-        recomendacion.contenido = sc.nextLine();
-
-        return recomendacion;
-    }
-
-    public List<RecomendacionIA> getAllRecomendaciones() {
-        return null;
-    }
-
-    public void getRecomendacionById(int idRecomendacion, RecomendacionIA recomendacion) {
-        if (this.idRecomendacion.equals(idRecomendacion)) {
-            System.out.println("Id Recomendacion: " + recomendacion.idRecomendacion +
-                    "\nUsuario: " + recomendacion.usuario.getNombre() +
-                    "\nTitulo: " + recomendacion.titulo +
-                    "\nContenido: " + recomendacion.contenido +
-                    "\nFecha Creacion: " + recomendacion.fechaCreacion + "\n");
+        try {
+            recomendacion.titulo = FormValidationUtil.validateString("Ingrese el nuevo título:");
+            recomendacion.contenido = FormValidationUtil.validateString("Ingrese el nuevo contenido:");
+            System.out.println("Recomendación actualizada exitosamente.");
+            return recomendacion;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la recomendación: " + e.getMessage());
+            return null;
         }
     }
 
-    public void deleteRecomendacion(int idRecomendacion) {}
+    public void getRecomendacionById(Long id) {
+        if (this.idRecomendacion != null && this.idRecomendacion.equals(id)) {
+            System.out.println("Id Recomendacion: " + this.idRecomendacion +
+                    "\nTitulo: " + this.titulo +
+                    "\nContenido: " + this.contenido +
+                    "\nFecha Creacion: " + this.fechaCreacion + "\n");
+        } else {
+            System.out.println("Recomendación con id " + id + " no encontrada.");
+        }
+    }
+
+    public void getAllRecomendaciones(List<RecomendacionIA> recomendaciones) {
+        if (recomendaciones == null || recomendaciones.isEmpty()) {
+            System.out.println("No hay recomendaciones registradas.");
+            return;
+        }
+        recomendaciones.forEach(r -> System.out.println("[" + r.idRecomendacion + "] " + r.titulo + " - " + r.fechaCreacion));
+    }
+
+    public void deleteRecomendacion(Long id) {
+        System.out.println("Recomendación con id " + id + " eliminada.");
+    }
+
 }

@@ -3,11 +3,9 @@ package application.domain;
 import application.util.FormValidationUtil;
 
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.util.List;
 
 public class RegistroDiario {
-
-    Scanner sc = new Scanner(System.in);
 
     private int idRegistro;
     private Usuario usuario;
@@ -109,8 +107,7 @@ public class RegistroDiario {
 
     // Methods
 
-    public RegistroDiario createRegistro(RegistroDiario registro){
-
+    public RegistroDiario createRegistro(RegistroDiario registro) {
         try {
             registro.idRegistro = FormValidationUtil.validateInt("Ingrese el id del registro:");
             registro.fecha = FormValidationUtil.validateLocalDate("Ingrese la fecha");
@@ -118,30 +115,52 @@ public class RegistroDiario {
             registro.peso = FormValidationUtil.validateDouble("Ingrese el peso:");
             registro.calidadSueno = FormValidationUtil.validateString("Ingrese la calidad del sueño:");
             registro.notasLibres = FormValidationUtil.validateString("Ingrese notas libres:");
+            System.out.println("Registro diario creado exitosamente.");
             return registro;
         } catch (Exception e) {
             System.out.println("Error al registrar el registro diario: " + e.getMessage());
             return null;
         }
-
     }
 
-    public void getRegistroById(int id , RegistroDiario registro){
-
-        if(this.idRegistro == id){
-
-            System.out.println("Id Registro: " + registro.idRegistro + "\n" +
-                    "Fecha: " + registro.fecha + "\n" +
-                    "Temperatura Basal: " + registro.temperaturaBasal + "\n" +
-                    "Peso: " + registro.peso + "\n" +
-                    "Calidad Sueño: " + registro.calidadSueno + "\n" +
-                    "Notas: " + registro.notasLibres + "\n");
-
-        } else {
-
-            System.out.println("Valide el id del registro que está consultando");
+    public RegistroDiario updateRegistro(RegistroDiario registro) {
+        try {
+            registro.fecha = FormValidationUtil.validateLocalDate("Ingrese la nueva fecha");
+            registro.temperaturaBasal = FormValidationUtil.validateDouble("Ingrese la nueva temperatura basal:");
+            registro.peso = FormValidationUtil.validateDouble("Ingrese el nuevo peso:");
+            registro.calidadSueno = FormValidationUtil.validateString("Ingrese la nueva calidad del sueño:");
+            registro.notasLibres = FormValidationUtil.validateString("Ingrese las nuevas notas libres:");
+            System.out.println("Registro diario actualizado exitosamente.");
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el registro diario: " + e.getMessage());
+            return null;
         }
+    }
 
+    public void getRegistroById(int id) {
+        if (this.idRegistro == id) {
+            System.out.println("Id Registro: " + this.idRegistro +
+                    "\nFecha: " + this.fecha +
+                    "\nTemperatura Basal: " + this.temperaturaBasal +
+                    "\nPeso: " + this.peso +
+                    "\nCalidad Sueño: " + this.calidadSueno +
+                    "\nNotas: " + this.notasLibres + "\n");
+        } else {
+            System.out.println("Registro con id " + id + " no encontrado.");
+        }
+    }
+
+    public void getAllRegistros(List<RegistroDiario> registros) {
+        if (registros == null || registros.isEmpty()) {
+            System.out.println("No hay registros diarios registrados.");
+            return;
+        }
+        registros.forEach(r -> System.out.println("[" + r.idRegistro + "] " + r.fecha + " | Temp: " + r.temperaturaBasal + " | Peso: " + r.peso));
+    }
+
+    public void deleteRegistro(int id) {
+        System.out.println("Registro con id " + id + " eliminado.");
     }
 
 }

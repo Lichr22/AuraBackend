@@ -9,17 +9,27 @@ public class ActividadSexualServiceImplementation implements ActividadSexualServ
 
     @Override
     public ActividadSexual createActividadSexual(ActividadSexual actividad) {
-        actividad.createActividadSexual(actividad);
-        return actividad;
+        return actividad.createActividadSexual(actividad);
+    }
+
+    @Override
+    public ActividadSexual updateActividadSexual(ActividadSexual actividad) {
+        return actividad.updateActividadSexual(actividad);
+    }
+
+    @Override
+    public void getActividadSexualById(int id, ActividadSexual actividad) {
+        actividad.getActividadSexualById(id);
+    }
+
+    @Override
+    public void getAllActividadesSexuales(List<ActividadSexual> actividades, ActividadSexual actividad) {
+        actividad.getAllActividadesSexuales(actividades);
     }
 
     @Override
     public void deleteActividadSexual(int id) {
-    }
-
-    @Override
-    public List<ActividadSexual> getActividadSexualById(int id) {
-        return List.of();
+        new ActividadSexual().deleteActividadSexual(id);
     }
 
 }

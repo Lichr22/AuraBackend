@@ -9,22 +9,27 @@ public class PermisosCompartidosServiceImplementation implements PermisosCompart
 
     @Override
     public PermisosCompartidos createPermiso(PermisosCompartidos permiso) {
-        permiso.createPermiso(permiso);
-        return permiso;
+        return permiso.createPermiso(permiso);
     }
 
     @Override
     public PermisosCompartidos updatePermiso(PermisosCompartidos permiso) {
-        return permiso;
+        return permiso.updatePermiso(permiso);
+    }
+
+    @Override
+    public void getPermisoById(Long id, PermisosCompartidos permiso) {
+        permiso.getPermisoById(id);
+    }
+
+    @Override
+    public void getAllPermisos(List<PermisosCompartidos> permisos, PermisosCompartidos permiso) {
+        permiso.getAllPermisos(permisos);
     }
 
     @Override
     public void deletePermiso(Long id) {
-    }
-
-    @Override
-    public List<PermisosCompartidos> getPermisoById(Long id) {
-        return List.of();
+        new PermisosCompartidos().deletePermiso(id);
     }
 
 }

@@ -8,8 +8,12 @@ public interface PrediccionService {
 
     Prediccion createPrediccion(Prediccion prediccion);
 
-    void deletePrediccion(int id);
+    Prediccion updatePrediccion(Prediccion prediccion);
 
-    List<Prediccion> getPrediccionById(int id);
+    void getPrediccionById(int id, Prediccion prediccion);
+
+    void getAllPredicciones(List<Prediccion> predicciones, Prediccion prediccion);
+
+    void deletePrediccion(int id);
 
 }

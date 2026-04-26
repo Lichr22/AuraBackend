@@ -7,31 +7,31 @@ import java.util.List;
 
 public class PerfilMenstrualServiceImplementation implements PerfilMenstrualService {
 
-    public PerfilMenstrualServiceImplementation(PerfilMenstrualServiceImplementation perfilMenstrualServiceImplementation, PerfilMenstrual perfilMenstrual) {
-    }
-
-    public PerfilMenstrualServiceImplementation() {
-
-    }
+    public PerfilMenstrualServiceImplementation() {}
 
     @Override
     public PerfilMenstrual createPerfil(PerfilMenstrual perfil) {
-        perfil.createPerfil(perfil);
-        return perfil;
+        return perfil.createPerfil(perfil);
     }
 
     @Override
     public PerfilMenstrual updatePerfil(PerfilMenstrual perfil) {
-        return perfil;
+        return perfil.updatePerfil(perfil);
+    }
+
+    @Override
+    public void getPerfilById(int id, PerfilMenstrual perfil) {
+        perfil.getPerfilById(id);
+    }
+
+    @Override
+    public void getAllPerfiles(List<PerfilMenstrual> perfiles, PerfilMenstrual perfil) {
+        perfil.getAllPerfiles(perfiles);
     }
 
     @Override
     public void deletePerfil(int id) {
-    }
-
-    @Override
-    public List<PerfilMenstrual> getPerfilById(int id) {
-        return List.of();
+        new PerfilMenstrual().deletePerfil(id);
     }
 
 }

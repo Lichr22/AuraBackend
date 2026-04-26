@@ -10,8 +10,10 @@ public interface PerfilMenstrualService {
 
     PerfilMenstrual updatePerfil(PerfilMenstrual perfil);
 
-    void deletePerfil(int id);
+    void getPerfilById(int id, PerfilMenstrual perfil);
 
-    List<PerfilMenstrual> getPerfilById(int id);
+    void getAllPerfiles(List<PerfilMenstrual> perfiles, PerfilMenstrual perfil);
+
+    void deletePerfil(int id);
 
 }

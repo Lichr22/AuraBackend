@@ -9,22 +9,27 @@ public class VinculoParejaServiceImplementation implements VinculoParejaService 
 
     @Override
     public VinculoPareja createVinculo(VinculoPareja vinculo) {
-        vinculo.createVinculo(vinculo);
-        return vinculo;
+        return vinculo.createVinculo(vinculo);
     }
 
     @Override
     public VinculoPareja updateVinculo(VinculoPareja vinculo) {
-        return vinculo;
+        return vinculo.updateVinculo(vinculo);
+    }
+
+    @Override
+    public void getVinculoById(Long id, VinculoPareja vinculo) {
+        vinculo.getVinculoById(id);
+    }
+
+    @Override
+    public void getAllVinculos(List<VinculoPareja> vinculos, VinculoPareja vinculo) {
+        vinculo.getAllVinculos(vinculos);
     }
 
     @Override
     public void deleteVinculo(Long id) {
-    }
-
-    @Override
-    public List<VinculoPareja> getVinculoById(Long id) {
-        return List.of();
+        new VinculoPareja().deleteVinculo(id);
     }
 
 }

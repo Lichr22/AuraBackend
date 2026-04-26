@@ -9,17 +9,27 @@ public class RegistroDiarioServiceImplementation implements RegistroDiarioServic
 
     @Override
     public RegistroDiario createRegistro(RegistroDiario registro) {
-        registro.createRegistro(registro);
-        return registro;
+        return registro.createRegistro(registro);
+    }
+
+    @Override
+    public RegistroDiario updateRegistro(RegistroDiario registro) {
+        return registro.updateRegistro(registro);
+    }
+
+    @Override
+    public void getRegistroById(int id, RegistroDiario registro) {
+        registro.getRegistroById(id);
+    }
+
+    @Override
+    public void getAllRegistros(List<RegistroDiario> registros, RegistroDiario registro) {
+        registro.getAllRegistros(registros);
     }
 
     @Override
     public void deleteRegistro(int id) {
-    }
-
-    @Override
-    public List<RegistroDiario> getRegistroById(int id) {
-        return List.of();
+        new RegistroDiario().deleteRegistro(id);
     }
 
 }

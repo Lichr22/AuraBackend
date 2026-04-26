@@ -9,17 +9,27 @@ public class RegistroFlujoServiceImplementation implements RegistroFlujoService 
 
     @Override
     public RegistroFlujo createRegistroFlujo(RegistroFlujo flujo) {
-        flujo.createRegistroFlujo(flujo);
-        return flujo;
+        return RegistroFlujo.createRegistroFlujo(flujo);
+    }
+
+    @Override
+    public RegistroFlujo updateRegistroFlujo(RegistroFlujo flujo) {
+        return flujo.updateRegistroFlujo(flujo);
+    }
+
+    @Override
+    public void getRegistroFlujoById(int id, RegistroFlujo flujo) {
+        flujo.getRegistroFlujoById(id);
+    }
+
+    @Override
+    public void getAllRegistrosFlujo(List<RegistroFlujo> flujos, RegistroFlujo flujo) {
+        flujo.getAllRegistrosFlujo(flujos);
     }
 
     @Override
     public void deleteRegistroFlujo(int id) {
-    }
-
-    @Override
-    public List<RegistroFlujo> getRegistroFlujoById(int id) {
-        return List.of();
+        new RegistroFlujo().deleteRegistroFlujo(id);
     }
 
 }

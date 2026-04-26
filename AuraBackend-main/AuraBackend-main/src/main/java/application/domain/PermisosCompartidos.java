@@ -3,11 +3,8 @@ package application.domain;
 import application.util.FormValidationUtil;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class PermisosCompartidos {
-
-    Scanner sc = new Scanner(System.in);
 
     private Long idPermiso;
     private Usuario usuarioPropietario;
@@ -44,6 +41,7 @@ public class PermisosCompartidos {
         try {
             permiso.nivelAcceso = FormValidationUtil.validateString("Ingrese el nivel de acceso del permiso:");
             permiso.estado = FormValidationUtil.validateString("Ingrese el estado del permiso:");
+            System.out.println("Permiso creado exitosamente.");
             return permiso;
         } catch (Exception e) {
             System.out.println("Error al registrar el permiso: " + e.getMessage());
@@ -52,28 +50,37 @@ public class PermisosCompartidos {
     }
 
     public PermisosCompartidos updatePermiso(PermisosCompartidos permiso) {
-        System.out.println("Actualizar nivel de acceso");
-        permiso.nivelAcceso = sc.nextLine();
-
-        System.out.println("Actualizar estado");
-        permiso.estado = sc.nextLine();
-
-        return permiso;
-    }
-
-    public List<PermisosCompartidos> getAllPermisos() {
-        return null;
-    }
-
-    public void getPermisoById(int idPermiso, PermisosCompartidos permiso) {
-        if (this.idPermiso.equals(idPermiso)) {
-            System.out.println("Id Permiso: " + permiso.idPermiso +
-                    "\nPropietario: " + permiso.usuarioPropietario.getNombre() +
-                    "\nInvitado: " + permiso.usuarioInvitado.getNombre() +
-                    "\nNivel Acceso: " + permiso.nivelAcceso +
-                    "\nEstado: " + permiso.estado + "\n");
+        try {
+            permiso.nivelAcceso = FormValidationUtil.validateString("Ingrese el nuevo nivel de acceso:");
+            permiso.estado = FormValidationUtil.validateString("Ingrese el nuevo estado:");
+            System.out.println("Permiso actualizado exitosamente.");
+            return permiso;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el permiso: " + e.getMessage());
+            return null;
         }
     }
 
-    public void deletePermiso(Long idPermiso) {}
+    public void getPermisoById(Long id) {
+        if (this.idPermiso != null && this.idPermiso.equals(id)) {
+            System.out.println("Id Permiso: " + this.idPermiso +
+                    "\nNivel Acceso: " + this.nivelAcceso +
+                    "\nEstado: " + this.estado + "\n");
+        } else {
+            System.out.println("Permiso con id " + id + " no encontrado.");
+        }
+    }
+
+    public void getAllPermisos(List<PermisosCompartidos> permisos) {
+        if (permisos == null || permisos.isEmpty()) {
+            System.out.println("No hay permisos registrados.");
+            return;
+        }
+        permisos.forEach(p -> System.out.println("[" + p.idPermiso + "] Nivel: " + p.nivelAcceso + " | Estado: " + p.estado));
+    }
+
+    public void deletePermiso(Long id) {
+        System.out.println("Permiso con id " + id + " eliminado.");
+    }
+
 }

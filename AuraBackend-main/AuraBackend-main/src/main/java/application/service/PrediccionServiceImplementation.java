@@ -9,17 +9,27 @@ public class PrediccionServiceImplementation implements PrediccionService {
 
     @Override
     public Prediccion createPrediccion(Prediccion prediccion) {
-        prediccion.createPrediccion(prediccion);
-        return prediccion;
+        return prediccion.createPrediccion(prediccion);
+    }
+
+    @Override
+    public Prediccion updatePrediccion(Prediccion prediccion) {
+        return prediccion.updatePrediccion(prediccion);
+    }
+
+    @Override
+    public void getPrediccionById(int id, Prediccion prediccion) {
+        prediccion.getPrediccionById(id);
+    }
+
+    @Override
+    public void getAllPredicciones(List<Prediccion> predicciones, Prediccion prediccion) {
+        prediccion.getAllPredicciones(predicciones);
     }
 
     @Override
     public void deletePrediccion(int id) {
-    }
-
-    @Override
-    public List<Prediccion> getPrediccionById(int id) {
-        return List.of();
+        new Prediccion().deletePrediccion(id);
     }
 
 }

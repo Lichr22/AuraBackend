@@ -8,8 +8,12 @@ public interface RegistroFlujoService {
 
     RegistroFlujo createRegistroFlujo(RegistroFlujo flujo);
 
-    void deleteRegistroFlujo(int id);
+    RegistroFlujo updateRegistroFlujo(RegistroFlujo flujo);
 
-    List<RegistroFlujo> getRegistroFlujoById(int id);
+    void getRegistroFlujoById(int id, RegistroFlujo flujo);
+
+    void getAllRegistrosFlujo(List<RegistroFlujo> flujos, RegistroFlujo flujo);
+
+    void deleteRegistroFlujo(int id);
 
 }

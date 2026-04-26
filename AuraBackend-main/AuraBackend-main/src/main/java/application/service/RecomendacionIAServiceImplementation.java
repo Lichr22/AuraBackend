@@ -9,22 +9,27 @@ public class RecomendacionIAServiceImplementation implements RecomendacionIAServ
 
     @Override
     public RecomendacionIA createRecomendacion(RecomendacionIA recomendacion) {
-        recomendacion.createRecomendacion(recomendacion);
-        return recomendacion;
+        return recomendacion.createRecomendacion(recomendacion);
     }
 
     @Override
     public RecomendacionIA updateRecomendacion(RecomendacionIA recomendacion) {
-        return recomendacion;
+        return recomendacion.updateRecomendacion(recomendacion);
+    }
+
+    @Override
+    public void getRecomendacionById(Long id, RecomendacionIA recomendacion) {
+        recomendacion.getRecomendacionById(id);
+    }
+
+    @Override
+    public void getAllRecomendaciones(List<RecomendacionIA> recomendaciones, RecomendacionIA recomendacion) {
+        recomendacion.getAllRecomendaciones(recomendaciones);
     }
 
     @Override
     public void deleteRecomendacion(Long id) {
-    }
-
-    @Override
-    public List<RecomendacionIA> getRecomendacionById(Long id) {
-        return List.of();
+        new RecomendacionIA().deleteRecomendacion(id);
     }
 
 }

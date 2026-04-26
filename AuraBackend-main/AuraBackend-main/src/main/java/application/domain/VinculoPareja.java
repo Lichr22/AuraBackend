@@ -4,11 +4,8 @@ import application.util.FormValidationUtil;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 public class VinculoPareja {
-
-    Scanner sc = new Scanner(System.in);
 
     Long idVinculoPareja;
     Usuario mujer;
@@ -71,6 +68,7 @@ public class VinculoPareja {
         try {
             vinculo.estadoVinculo = FormValidationUtil.validateString("Ingrese el estado del vínculo:");
             vinculo.fechaVinculacion = LocalDate.now();
+            System.out.println("Vínculo creado exitosamente.");
             return vinculo;
         } catch (Exception e) {
             System.out.println("Error al registrar el vínculo: " + e.getMessage());
@@ -79,25 +77,36 @@ public class VinculoPareja {
     }
 
     public VinculoPareja updateVinculo(VinculoPareja vinculo) {
-        System.out.println("Actualizar estado del vinculo");
-        vinculo.estadoVinculo = sc.nextLine();
-
-        return vinculo;
-    }
-
-    public List<VinculoPareja> getAllVinculos() {
-        return null;
-    }
-
-    public void getVinculoById(int idVinculoPareja, VinculoPareja vinculo) {
-        if (this.idVinculoPareja.equals(idVinculoPareja)) {
-            System.out.println("Id Vinculo: " + vinculo.idVinculoPareja +
-                    "\nMujer: " + vinculo.mujer.getNombre() +
-                    "\nPareja: " + vinculo.pareja.getNombre() +
-                    "\nEstado Vinculo: " + vinculo.estadoVinculo +
-                    "\nFecha Vinculacion: " + vinculo.fechaVinculacion + "\n");
+        try {
+            vinculo.estadoVinculo = FormValidationUtil.validateString("Ingrese el nuevo estado del vínculo:");
+            System.out.println("Vínculo actualizado exitosamente.");
+            return vinculo;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el vínculo: " + e.getMessage());
+            return null;
         }
     }
 
-    public void deleteVinculo(int idVinculoPareja) {}
+    public void getVinculoById(Long id) {
+        if (this.idVinculoPareja != null && this.idVinculoPareja.equals(id)) {
+            System.out.println("Id Vinculo: " + this.idVinculoPareja +
+                    "\nEstado Vinculo: " + this.estadoVinculo +
+                    "\nFecha Vinculacion: " + this.fechaVinculacion + "\n");
+        } else {
+            System.out.println("Vínculo con id " + id + " no encontrado.");
+        }
+    }
+
+    public void getAllVinculos(List<VinculoPareja> vinculos) {
+        if (vinculos == null || vinculos.isEmpty()) {
+            System.out.println("No hay vínculos registrados.");
+            return;
+        }
+        vinculos.forEach(v -> System.out.println("[" + v.idVinculoPareja + "] Estado: " + v.estadoVinculo + " | Fecha: " + v.fechaVinculacion));
+    }
+
+    public void deleteVinculo(Long id) {
+        System.out.println("Vínculo con id " + id + " eliminado.");
+    }
+
 }

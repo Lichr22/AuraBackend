@@ -1,11 +1,10 @@
 package application.domain;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import application.util.FormValidationUtil;
+
+import java.util.List;
 
 public class ActividadSexual {
-
-    Scanner sc = new Scanner(System.in);
 
     private int idActividad;
     private RegistroDiario registroDiario;
@@ -57,64 +56,54 @@ public class ActividadSexual {
     // METODOS
     //Create
 
-    public ActividadSexual createActividadSexual(ActividadSexual actividad){
-
-        System.out.println("Ingrese el id de la actividad sexual");
+    public ActividadSexual createActividadSexual(ActividadSexual actividad) {
         try {
-            int idActividad = sc.nextInt();
-            actividad.idActividad = idActividad;
-            sc.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Error: El id debe ser un número entero.");
-            sc.nextLine();
+            actividad.idActividad = FormValidationUtil.validateInt("Ingrese el id de la actividad sexual:");
+            actividad.usoPreservativo = FormValidationUtil.validateBoolean("¿Se usó preservativo? (true/false):");
+            actividad.orgasmo = FormValidationUtil.validateBoolean("¿Hubo orgasmo? (true/false):");
+            actividad.metodoAdicional = FormValidationUtil.validateString("Ingrese método anticonceptivo adicional:");
+            System.out.println("Actividad sexual creada exitosamente.");
+            return actividad;
+        } catch (Exception e) {
+            System.out.println("Error al registrar la actividad sexual: " + e.getMessage());
             return null;
         }
-
-        System.out.println("¿Se usó preservativo? (true/false)");
-        try {
-            boolean usoPreservativo = sc.nextBoolean();
-            actividad.usoPreservativo = usoPreservativo;
-            sc.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Ingrese 'true' o 'false'.");
-            sc.nextLine();
-            return null;
-        }
-
-        System.out.println("¿Hubo orgasmo? (true/false)");
-        try {
-            boolean orgasmo = sc.nextBoolean();
-            actividad.orgasmo = orgasmo;
-            sc.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Ingrese 'true' o 'false'.");
-            sc.nextLine();
-            return null;
-        }
-
-        System.out.println("Ingrese método anticonceptivo adicional");
-        actividad.metodoAdicional = sc.nextLine();
-
-        return actividad;
     }
 
-    //Get
-
-    public void getActividadSexual(int id){
-
-        if(this.idActividad == id){
-
-            System.out.println("Id Actividad: " + this.idActividad + "\n" +
-                    "Uso preservativo: " + this.usoPreservativo + "\n" +
-                    "Orgasmo: " + this.orgasmo + "\n" +
-                    "Metodo adicional: " + this.metodoAdicional + "\n");
-
-        } else {
-
-            System.out.println("Valide el id de la actividad que está consultando");
-
+    public ActividadSexual updateActividadSexual(ActividadSexual actividad) {
+        try {
+            actividad.usoPreservativo = FormValidationUtil.validateBoolean("¿Se usó preservativo? (true/false):");
+            actividad.orgasmo = FormValidationUtil.validateBoolean("¿Hubo orgasmo? (true/false):");
+            actividad.metodoAdicional = FormValidationUtil.validateString("Ingrese el nuevo método anticonceptivo adicional:");
+            System.out.println("Actividad sexual actualizada exitosamente.");
+            return actividad;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la actividad sexual: " + e.getMessage());
+            return null;
         }
+    }
 
+    public void getActividadSexualById(int id) {
+        if (this.idActividad == id) {
+            System.out.println("Id Actividad: " + this.idActividad +
+                    "\nUso preservativo: " + this.usoPreservativo +
+                    "\nOrgasmo: " + this.orgasmo +
+                    "\nMetodo adicional: " + this.metodoAdicional + "\n");
+        } else {
+            System.out.println("Actividad con id " + id + " no encontrada.");
+        }
+    }
+
+    public void getAllActividadesSexuales(List<ActividadSexual> actividades) {
+        if (actividades == null || actividades.isEmpty()) {
+            System.out.println("No hay actividades sexuales registradas.");
+            return;
+        }
+        actividades.forEach(a -> System.out.println("[" + a.idActividad + "] Preservativo: " + a.usoPreservativo + " | Metodo: " + a.metodoAdicional));
+    }
+
+    public void deleteActividadSexual(int id) {
+        System.out.println("Actividad sexual con id " + id + " eliminada.");
     }
 
 }

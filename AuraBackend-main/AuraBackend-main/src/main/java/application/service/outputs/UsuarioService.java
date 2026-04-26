@@ -8,8 +8,12 @@ public interface UsuarioService {
 
     Usuario createUsuario(Usuario usuario);
 
-    public void deleteUsuario(int id);
+    Usuario updateUsuario(Usuario usuario);
 
-    public List<Usuario> getUsuarioById(int id);
+    void getUsuarioById(int id, Usuario usuario);
+
+    void getAllUsuarios(List<Usuario> usuarios, Usuario usuario);
+
+    void deleteUsuario(int id);
 
 }

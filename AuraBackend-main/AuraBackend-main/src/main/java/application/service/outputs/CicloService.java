@@ -8,8 +8,12 @@ public interface CicloService {
 
     Ciclo createCiclo(Ciclo ciclo);
 
-    void deleteCiclo(int id);
+    Ciclo updateCiclo(Ciclo ciclo);
 
-    List<Ciclo> getCicloById(int id);
+    void getCicloById(int id, Ciclo ciclo);
+
+    void getAllCiclos(List<Ciclo> ciclos, Ciclo ciclo);
+
+    void deleteCiclo(int id);
 
 }

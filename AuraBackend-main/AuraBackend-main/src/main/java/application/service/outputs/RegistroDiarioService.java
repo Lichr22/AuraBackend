@@ -8,8 +8,12 @@ public interface RegistroDiarioService {
 
     RegistroDiario createRegistro(RegistroDiario registro);
 
-    void deleteRegistro(int id);
+    RegistroDiario updateRegistro(RegistroDiario registro);
 
-    List<RegistroDiario> getRegistroById(int id);
+    void getRegistroById(int id, RegistroDiario registro);
+
+    void getAllRegistros(List<RegistroDiario> registros, RegistroDiario registro);
+
+    void deleteRegistro(int id);
 
 }

@@ -1,14 +1,12 @@
 package application.domain;
 
 
+import application.util.FormValidationUtil;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.List;
 
 public class Prediccion {
-
-    Scanner sc = new Scanner(System.in);
 
     private int idPrediccion;
     private Usuario usuario;
@@ -103,78 +101,59 @@ public class Prediccion {
 // METODOS
 
     public Prediccion createPrediccion(Prediccion prediccion) {
-
-        System.out.println("Ingrese el id de la prediccion");
         try {
-            int idPrediccion = sc.nextInt();
-            prediccion.idPrediccion = idPrediccion;
-            sc.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Error: El id debe ser un número entero.");
-            sc.nextLine();
+            prediccion.idPrediccion = FormValidationUtil.validateInt("Ingrese el id de la prediccion:");
+            prediccion.fechaCalculo = FormValidationUtil.validateLocalDate("Ingrese la fecha de cálculo");
+            prediccion.proximaMenstruacionEstimada = FormValidationUtil.validateLocalDate("Ingrese la próxima menstruación estimada");
+            prediccion.inicioVentanaFertil = FormValidationUtil.validateLocalDate("Ingrese inicio de la ventana fértil");
+            prediccion.finVentanaFertil = FormValidationUtil.validateLocalDate("Ingrese fin de la ventana fértil");
+            prediccion.probabilidadEmbarazo = FormValidationUtil.validateString("Ingrese probabilidad de embarazo:");
+            System.out.println("Predicción creada exitosamente.");
+            return prediccion;
+        } catch (Exception e) {
+            System.out.println("Error al registrar la predicción: " + e.getMessage());
             return null;
         }
-
-        System.out.println("Ingrese la fecha de cálculo (AAAA-MM-DD)");
-        try {
-            String fechaCalculo = sc.nextLine();
-            prediccion.fechaCalculo = LocalDate.parse(fechaCalculo);
-        } catch (DateTimeParseException e) {
-            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
-            return null;
-        }
-
-        System.out.println("Ingrese la próxima menstruación estimada (AAAA-MM-DD)");
-        try {
-            String proximaMenstruacion = sc.nextLine();
-            prediccion.proximaMenstruacionEstimada = LocalDate.parse(proximaMenstruacion);
-        } catch (DateTimeParseException e) {
-            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
-            return null;
-        }
-
-        System.out.println("Ingrese inicio de la ventana fértil (AAAA-MM-DD)");
-        try {
-            String inicioVentana = sc.nextLine();
-            prediccion.inicioVentanaFertil = LocalDate.parse(inicioVentana);
-        } catch (DateTimeParseException e) {
-            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
-            return null;
-        }
-
-        System.out.println("Ingrese fin de la ventana fértil (AAAA-MM-DD)");
-        try {
-            String finVentana = sc.nextLine();
-            prediccion.finVentanaFertil = LocalDate.parse(finVentana);
-        } catch (DateTimeParseException e) {
-            System.out.println("Error: Formato de fecha inválido. Use AAAA-MM-DD.");
-            return null;
-        }
-
-        System.out.println("Ingrese probabilidad de embarazo");
-        prediccion.probabilidadEmbarazo = sc.nextLine();
-
-        return prediccion;
     }
 
-//Get
+    public Prediccion updatePrediccion(Prediccion prediccion) {
+        try {
+            prediccion.fechaCalculo = FormValidationUtil.validateLocalDate("Ingrese la nueva fecha de cálculo");
+            prediccion.proximaMenstruacionEstimada = FormValidationUtil.validateLocalDate("Ingrese la nueva próxima menstruación estimada");
+            prediccion.inicioVentanaFertil = FormValidationUtil.validateLocalDate("Ingrese el nuevo inicio de la ventana fértil");
+            prediccion.finVentanaFertil = FormValidationUtil.validateLocalDate("Ingrese el nuevo fin de la ventana fértil");
+            prediccion.probabilidadEmbarazo = FormValidationUtil.validateString("Ingrese la nueva probabilidad de embarazo:");
+            System.out.println("Predicción actualizada exitosamente.");
+            return prediccion;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la predicción: " + e.getMessage());
+            return null;
+        }
+    }
 
-    public void getPrediccion(int id) {
-
+    public void getPrediccionById(int id) {
         if (this.idPrediccion == id) {
-
-            System.out.println("Id Prediccion: " + this.idPrediccion + "\n" +
-                    "Fecha Calculo: " + this.fechaCalculo + "\n" +
-                    "Proxima menstruacion estimada: " + this.proximaMenstruacionEstimada + "\n" +
-                    "Inicio ventana fertil: " + this.inicioVentanaFertil + "\n" +
-                    "Fin ventana fertil: " + this.finVentanaFertil + "\n" +
-                    "Probabilidad de embarazo: " + this.probabilidadEmbarazo + "\n");
-
+            System.out.println("Id Prediccion: " + this.idPrediccion +
+                    "\nFecha Calculo: " + this.fechaCalculo +
+                    "\nProxima menstruacion estimada: " + this.proximaMenstruacionEstimada +
+                    "\nInicio ventana fertil: " + this.inicioVentanaFertil +
+                    "\nFin ventana fertil: " + this.finVentanaFertil +
+                    "\nProbabilidad de embarazo: " + this.probabilidadEmbarazo + "\n");
         } else {
-
-            System.out.println("Valide el id de la predicción que está consultando");
-
+            System.out.println("Predicción con id " + id + " no encontrada.");
         }
-
     }
+
+    public void getAllPredicciones(List<Prediccion> predicciones) {
+        if (predicciones == null || predicciones.isEmpty()) {
+            System.out.println("No hay predicciones registradas.");
+            return;
+        }
+        predicciones.forEach(p -> System.out.println("[" + p.idPrediccion + "] Calculo: " + p.fechaCalculo + " | Prox. menstruacion: " + p.proximaMenstruacionEstimada));
+    }
+
+    public void deletePrediccion(int id) {
+        System.out.println("Predicción con id " + id + " eliminada.");
+    }
+
 }

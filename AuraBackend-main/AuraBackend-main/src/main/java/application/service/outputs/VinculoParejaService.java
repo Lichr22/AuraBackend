@@ -10,8 +10,10 @@ public interface VinculoParejaService {
 
     VinculoPareja updateVinculo(VinculoPareja vinculo);
 
-    void deleteVinculo(Long id);
+    void getVinculoById(Long id, VinculoPareja vinculo);
 
-    List<VinculoPareja> getVinculoById(Long id);
+    void getAllVinculos(List<VinculoPareja> vinculos, VinculoPareja vinculo);
+
+    void deleteVinculo(Long id);
 
 }

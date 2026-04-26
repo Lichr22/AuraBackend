@@ -3,11 +3,9 @@ package application.domain;
 import application.util.FormValidationUtil;
 
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.util.List;
 
 public class Ciclo {
-
-    Scanner sc = new Scanner(System.in);
 
     private int idCiclo;
     private Usuario usuario;
@@ -88,14 +86,14 @@ public class Ciclo {
 
     // Methods
 
-    public Ciclo createCiclo(Ciclo ciclo){
-
+    public Ciclo createCiclo(Ciclo ciclo) {
         try {
             ciclo.idCiclo = FormValidationUtil.validateInt("Ingrese el id del ciclo:");
             ciclo.fechaInicio = FormValidationUtil.validateLocalDate("Ingrese la fecha de inicio");
             ciclo.fechaFin = FormValidationUtil.validateLocalDate("Ingrese la fecha de fin");
             ciclo.duracionTotal = FormValidationUtil.validateInt("Ingrese la duración total del ciclo:");
             ciclo.esRegular = FormValidationUtil.validateBoolean("¿El ciclo es regular? (true/false):");
+            System.out.println("Ciclo creado exitosamente.");
             return ciclo;
         } catch (Exception e) {
             System.out.println("Error al registrar el ciclo: " + e.getMessage());
@@ -103,22 +101,42 @@ public class Ciclo {
         }
     }
 
-    public void getCicloById(int id , Ciclo ciclo){
-
-        if(this.idCiclo == id){
-
-            System.out.println("Id Ciclo: " + ciclo.idCiclo + "\n" +
-                    "Fecha Inicio: " + ciclo.fechaInicio + "\n" +
-                    "Fecha Fin: " + ciclo.fechaFin + "\n" +
-                    "Duracion: " + ciclo.duracionTotal + "\n" +
-                    "Regular: " + ciclo.esRegular + "\n");
-
-        } else {
-
-            System.out.println("Valide el id del ciclo que está consultando");
-
+    public Ciclo updateCiclo(Ciclo ciclo) {
+        try {
+            ciclo.fechaInicio = FormValidationUtil.validateLocalDate("Ingrese la nueva fecha de inicio");
+            ciclo.fechaFin = FormValidationUtil.validateLocalDate("Ingrese la nueva fecha de fin");
+            ciclo.duracionTotal = FormValidationUtil.validateInt("Ingrese la nueva duración total:");
+            ciclo.esRegular = FormValidationUtil.validateBoolean("¿El ciclo es regular? (true/false):");
+            System.out.println("Ciclo actualizado exitosamente.");
+            return ciclo;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el ciclo: " + e.getMessage());
+            return null;
         }
+    }
 
+    public void getCicloById(int id) {
+        if (this.idCiclo == id) {
+            System.out.println("Id Ciclo: " + this.idCiclo +
+                    "\nFecha Inicio: " + this.fechaInicio +
+                    "\nFecha Fin: " + this.fechaFin +
+                    "\nDuracion: " + this.duracionTotal +
+                    "\nRegular: " + this.esRegular + "\n");
+        } else {
+            System.out.println("Ciclo con id " + id + " no encontrado.");
+        }
+    }
+
+    public void getAllCiclos(List<Ciclo> ciclos) {
+        if (ciclos == null || ciclos.isEmpty()) {
+            System.out.println("No hay ciclos registrados.");
+            return;
+        }
+        ciclos.forEach(c -> System.out.println("[" + c.idCiclo + "] " + c.fechaInicio + " - " + c.fechaFin + " | Regular: " + c.esRegular));
+    }
+
+    public void deleteCiclo(int id) {
+        System.out.println("Ciclo con id " + id + " eliminado.");
     }
 
 }

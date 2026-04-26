@@ -8,8 +8,12 @@ public interface ActividadSexualService {
 
     ActividadSexual createActividadSexual(ActividadSexual actividad);
 
-    void deleteActividadSexual(int id);
+    ActividadSexual updateActividadSexual(ActividadSexual actividad);
 
-    List<ActividadSexual> getActividadSexualById(int id);
+    void getActividadSexualById(int id, ActividadSexual actividad);
+
+    void getAllActividadesSexuales(List<ActividadSexual> actividades, ActividadSexual actividad);
+
+    void deleteActividadSexual(int id);
 
 }

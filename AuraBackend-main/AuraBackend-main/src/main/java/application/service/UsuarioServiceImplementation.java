@@ -8,19 +8,28 @@ import java.util.List;
 public class UsuarioServiceImplementation implements UsuarioService {
 
     @Override
-    public Usuario createUsuario(Usuario usuario){
-        usuario.createUser(usuario);
-        return usuario;
+    public Usuario createUsuario(Usuario usuario) {
+        return usuario.createUser(usuario);
+    }
+
+    @Override
+    public Usuario updateUsuario(Usuario usuario) {
+        return usuario.updateUser(usuario);
+    }
+
+    @Override
+    public void getUsuarioById(int id, Usuario usuario) {
+        usuario.getUserById(id);
+    }
+
+    @Override
+    public void getAllUsuarios(List<Usuario> usuarios, Usuario usuario) {
+        usuario.getAllUsers(usuarios);
     }
 
     @Override
     public void deleteUsuario(int id) {
-
-    }
-
-    @Override
-    public List<Usuario> getUsuarioById(int id) {
-        return List.of();
+        new Usuario().deleteUser(id);
     }
 
 }

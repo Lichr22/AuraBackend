@@ -4,11 +4,8 @@ import application.util.FormValidationUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Scanner;
 
 public class Usuario {
-
-    Scanner sc = new Scanner(System.in);
 
     private int idUsuario;
     private String nombre;
@@ -101,8 +98,7 @@ public class Usuario {
     }
 
 
-    public Usuario createUser(Usuario usuario){
-
+    public Usuario createUser(Usuario usuario) {
         try {
             usuario.nombre = FormValidationUtil.validateString("Ingrese el nombre del usuario:");
             usuario.email = FormValidationUtil.validateString("Ingrese el email:");
@@ -111,6 +107,7 @@ public class Usuario {
             usuario.codigoVinculacion = FormValidationUtil.validateString("Ingrese el código de vinculación:");
             usuario.estadoCuenta = FormValidationUtil.validateString("Ingrese el estado de la cuenta:");
             usuario.fechaRegistro = LocalDateTime.now();
+            System.out.println("Usuario creado exitosamente.");
             return usuario;
         } catch (Exception e) {
             System.out.println("Error al registrar el usuario: " + e.getMessage());
@@ -118,43 +115,44 @@ public class Usuario {
         }
     }
 
-    public Usuario updateUser(Usuario usuario){
-
-        System.out.println("Actualizar nombre");
-        usuario.nombre = sc.nextLine();
-
-        System.out.println("Actualizar email");
-        usuario.email = sc.nextLine();
-
-        System.out.println("Actualizar rol");
-        usuario.rol = sc.nextLine();
-
-        System.out.println("Actualizar estado de cuenta");
-        usuario.estadoCuenta = sc.nextLine();
-
-        return usuario;
-    }
-
-    public List<Usuario> getAllUsers(){
-        return null;
-    }
-
-    public void getUserById(int idUsuario, Usuario usuario){
-
-        if (this.idUsuario == idUsuario){
-            System.out.println("Id Usuario: " + usuario.idUsuario +
-                    "\n" + "Nombre: " + usuario.nombre +
-                    "\n" + "Email: " + usuario.email +
-                    "\n" + "Rol: " + usuario.rol +
-                    "\n" + "Codigo Vinculacion: " + usuario.codigoVinculacion +
-                    "\n" + "Fecha Registro: " + usuario.fechaRegistro +
-                    "\n" + "Estado Cuenta: " + usuario.estadoCuenta + "\n");
+    public Usuario updateUser(Usuario usuario) {
+        try {
+            usuario.nombre = FormValidationUtil.validateString("Ingrese el nuevo nombre:");
+            usuario.email = FormValidationUtil.validateString("Ingrese el nuevo email:");
+            usuario.rol = FormValidationUtil.validateString("Ingrese el nuevo rol:");
+            usuario.estadoCuenta = FormValidationUtil.validateString("Ingrese el nuevo estado de cuenta:");
+            System.out.println("Usuario actualizado exitosamente.");
+            return usuario;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el usuario: " + e.getMessage());
+            return null;
         }
-
     }
 
-    public void deleteUser(int idUsuario){
+    public void getUserById(int idUsuario) {
+        if (this.idUsuario == idUsuario) {
+            System.out.println("Id Usuario: " + this.idUsuario +
+                    "\nNombre: " + this.nombre +
+                    "\nEmail: " + this.email +
+                    "\nRol: " + this.rol +
+                    "\nCodigo Vinculacion: " + this.codigoVinculacion +
+                    "\nFecha Registro: " + this.fechaRegistro +
+                    "\nEstado Cuenta: " + this.estadoCuenta + "\n");
+        } else {
+            System.out.println("Usuario con id " + idUsuario + " no encontrado.");
+        }
+    }
 
+    public void getAllUsers(List<Usuario> usuarios) {
+        if (usuarios == null || usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+            return;
+        }
+        usuarios.forEach(u -> System.out.println("[" + u.idUsuario + "] " + u.nombre + " - " + u.email + " - " + u.rol));
+    }
+
+    public void deleteUser(int idUsuario) {
+        System.out.println("Usuario con id " + idUsuario + " eliminado.");
     }
 
 }

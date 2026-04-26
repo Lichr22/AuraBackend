@@ -10,8 +10,10 @@ public interface RecomendacionIAService {
 
     RecomendacionIA updateRecomendacion(RecomendacionIA recomendacion);
 
-    void deleteRecomendacion(Long id);
+    void getRecomendacionById(Long id, RecomendacionIA recomendacion);
 
-    List<RecomendacionIA> getRecomendacionById(Long id);
+    void getAllRecomendaciones(List<RecomendacionIA> recomendaciones, RecomendacionIA recomendacion);
+
+    void deleteRecomendacion(Long id);
 
 }
