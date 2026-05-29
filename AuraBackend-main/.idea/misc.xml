@@ -4,7 +4,7 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/AuraBackend-main/AuraBackend-main/pom.xml" />
+        <option value="$PROJECT_DIR$/AuraBackend-main/pom.xml" />
       </list>
     </option>
   </component>
