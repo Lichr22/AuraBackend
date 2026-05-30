@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.RegistroDiario;
 import application.domain.RegistroFlujo;
+import application.infrastructure.mapper.RegistroFlujoRowMapper;
 import application.service.port.RegistroFlujoRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RegistroFlujoDAO implements RegistroFlujoRepositoryPort {
+public class RegistroFlujoDAO extends BaseDAO implements RegistroFlujoRepositoryPort {
 
-    private final Connection connection;
+    private final RegistroFlujoRowMapper mapper = new RegistroFlujoRowMapper();
 
-    public RegistroFlujoDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public RegistroFlujo saveRegistroFlujo(RegistroFlujo flujo) {
@@ -55,7 +53,7 @@ public class RegistroFlujoDAO implements RegistroFlujoRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar registro flujo: " + e.getMessage(), e);
@@ -68,7 +66,7 @@ public class RegistroFlujoDAO implements RegistroFlujoRepositoryPort {
         List<RegistroFlujo> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar registros flujo: " + e.getMessage(), e);
         }
@@ -86,16 +84,4 @@ public class RegistroFlujoDAO implements RegistroFlujoRepositoryPort {
         }
     }
 
-    private RegistroFlujo mapear(ResultSet rs) throws SQLException {
-        // Agregación: RegistroFlujo agrega a RegistroDiario (req. 9)
-        RegistroDiario registroDiario = new RegistroDiario(rs.getInt("id_registro"));
-
-        return new RegistroFlujo(
-            rs.getInt("id_flujo"),
-            registroDiario,
-            rs.getString("tipo_textura"),
-            rs.getString("color"),
-            rs.getString("cantidad")
-        );
-    }
 }

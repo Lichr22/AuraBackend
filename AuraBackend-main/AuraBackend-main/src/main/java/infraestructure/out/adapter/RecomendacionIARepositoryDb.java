@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RecomendacionIARepositoryDb implements RecomendacionIARepositoryPort {
+public class RecomendacionIARepositoryDb extends BaseRepositoryDB implements RecomendacionIARepositoryPort {
 
-    private final Connection connection;
     private final RecomendacionIARowMapper mapper = new RecomendacionIARowMapper();
 
-    public RecomendacionIARepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public RecomendacionIA saveRecomendacion(RecomendacionIA r) {

@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PerfilMenstrualRepositoryDb implements PerfilMenstrualRepositoryPort {
+public class PerfilMenstrualRepositoryDb extends BaseRepositoryDB implements PerfilMenstrualRepositoryPort {
 
-    private final Connection connection;
     private final PerfilMenstrualRowMapper mapper = new PerfilMenstrualRowMapper();
 
-    public PerfilMenstrualRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public PerfilMenstrual savePerfilMenstrual(PerfilMenstrual p) {

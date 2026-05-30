@@ -13,7 +13,7 @@ public class CicloView {
 
     public CicloView(CicloServiceImplementation service) {
         this.service = service;
-        this.ciclo = ciclo;
+        this.ciclo = new Ciclo();
     }
 
     public void createCiclo() {

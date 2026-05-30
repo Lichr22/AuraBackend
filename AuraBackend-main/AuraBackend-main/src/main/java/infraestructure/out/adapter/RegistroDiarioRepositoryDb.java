@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RegistroDiarioRepositoryDb implements RegistroDiarioRepositoryPort {
+public class RegistroDiarioRepositoryDb extends BaseRepositoryDB implements RegistroDiarioRepositoryPort {
 
-    private final Connection connection;
     private final RegistroDiarioRowMapper mapper = new RegistroDiarioRowMapper();
 
-    public RegistroDiarioRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public RegistroDiario saveRegistroDiario(RegistroDiario r) {

@@ -13,7 +13,7 @@ public class RegistroFlujoView {
 
     public RegistroFlujoView(RegistroFlujoServiceImplementation service) {
         this.service = service;
-        this.registroFlujo = registroFlujo;
+        this.registroFlujo = new RegistroFlujo();
     }
 
     public void createRegistroFlujo() {

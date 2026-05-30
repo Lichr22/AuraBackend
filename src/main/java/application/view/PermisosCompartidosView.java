@@ -13,7 +13,7 @@ public class PermisosCompartidosView {
 
     public PermisosCompartidosView(PermisosCompartidosServiceImplementation service) {
         this.service = service;
-        this.permisosCompartidos = permisosCompartidos;
+        this.permisosCompartidos = new PermisosCompartidos();
     }
 
     public void createPermiso() {

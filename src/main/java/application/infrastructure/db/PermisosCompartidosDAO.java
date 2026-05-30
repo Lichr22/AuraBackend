@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.PermisosCompartidos;
 import application.domain.Usuario;
+import application.infrastructure.mapper.PermisosCompartidosRowMapper;
 import application.service.port.PermisosCompartidosRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PermisosCompartidosDAO implements PermisosCompartidosRepositoryPort {
+public class PermisosCompartidosDAO extends BaseDAO implements PermisosCompartidosRepositoryPort {
 
-    private final Connection connection;
+    private final PermisosCompartidosRowMapper mapper = new PermisosCompartidosRowMapper();
 
-    public PermisosCompartidosDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public PermisosCompartidos savePermiso(PermisosCompartidos permiso) {
@@ -54,7 +52,7 @@ public class PermisosCompartidosDAO implements PermisosCompartidosRepositoryPort
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar permiso compartido: " + e.getMessage(), e);
@@ -67,7 +65,7 @@ public class PermisosCompartidosDAO implements PermisosCompartidosRepositoryPort
         List<PermisosCompartidos> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar permisos compartidos: " + e.getMessage(), e);
         }
@@ -85,20 +83,4 @@ public class PermisosCompartidosDAO implements PermisosCompartidosRepositoryPort
         }
     }
 
-    private PermisosCompartidos mapear(ResultSet rs) throws SQLException {
-        // Asociación: PermisosCompartidos conecta dos Usuarios (propietario e invitado — req. 9)
-        Usuario propietario = new Usuario();
-        propietario.setIdUsuario(rs.getInt("id_usuario_propietario"));
-
-        Usuario invitado = new Usuario();
-        invitado.setIdUsuario(rs.getInt("id_usuario_invitado"));
-
-        return new PermisosCompartidos(
-            rs.getLong("id_permiso"),
-            propietario,
-            invitado,
-            rs.getString("nivel_acceso"),
-            rs.getString("estado")
-        );
-    }
 }

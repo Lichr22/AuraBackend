@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.PerfilMenstrual;
 import application.domain.Usuario;
+import application.infrastructure.mapper.PerfilMenstrualRowMapper;
 import application.service.port.PerfilMenstrualRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PerfilMenstrualDAO implements PerfilMenstrualRepositoryPort {
+public class PerfilMenstrualDAO extends BaseDAO implements PerfilMenstrualRepositoryPort {
 
-    private final Connection connection;
+    private final PerfilMenstrualRowMapper mapper = new PerfilMenstrualRowMapper();
 
-    public PerfilMenstrualDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public PerfilMenstrual savePerfilMenstrual(PerfilMenstrual perfil) {
@@ -59,7 +57,7 @@ public class PerfilMenstrualDAO implements PerfilMenstrualRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar perfil menstrual: " + e.getMessage(), e);
@@ -72,7 +70,7 @@ public class PerfilMenstrualDAO implements PerfilMenstrualRepositoryPort {
         List<PerfilMenstrual> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar perfiles menstruales: " + e.getMessage(), e);
         }
@@ -90,18 +88,4 @@ public class PerfilMenstrualDAO implements PerfilMenstrualRepositoryPort {
         }
     }
 
-    private PerfilMenstrual mapear(ResultSet rs) throws SQLException {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(rs.getInt("id_usuario"));
-
-        return new PerfilMenstrual(
-            rs.getInt("id_perfil"),
-            usuario,
-            rs.getInt("edad"),
-            rs.getInt("ciclo_promedio"),
-            rs.getInt("duracion_periodo_promedio"),
-            rs.getBoolean("usa_anticonceptivo"),
-            rs.getString("tipo_anticonceptivo")
-        );
-    }
 }

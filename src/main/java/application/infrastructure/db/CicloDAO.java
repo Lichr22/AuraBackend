@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.Ciclo;
 import application.domain.Usuario;
+import application.infrastructure.mapper.CicloRowMapper;
 import application.service.port.CicloRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CicloDAO implements CicloRepositoryPort {
+public class CicloDAO extends BaseDAO implements CicloRepositoryPort {
 
-    private final Connection connection;
+    private final CicloRowMapper mapper = new CicloRowMapper();
 
-    public CicloDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public Ciclo saveCiclo(Ciclo ciclo) {
@@ -57,7 +55,7 @@ public class CicloDAO implements CicloRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar ciclo: " + e.getMessage(), e);
@@ -70,7 +68,7 @@ public class CicloDAO implements CicloRepositoryPort {
         List<Ciclo> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar ciclos: " + e.getMessage(), e);
         }
@@ -88,19 +86,4 @@ public class CicloDAO implements CicloRepositoryPort {
         }
     }
 
-    private Ciclo mapear(ResultSet rs) throws SQLException {
-        // Relación de Asociación: Ciclo tiene un Usuario (solo necesitamos el ID)
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(rs.getInt("id_usuario"));
-
-        Date fechaFin = rs.getDate("fecha_fin");
-        return new Ciclo(
-            rs.getInt("id_ciclo"),
-            usuario,
-            rs.getDate("fecha_inicio").toLocalDate(),
-            fechaFin != null ? fechaFin.toLocalDate() : null,
-            rs.getInt("duracion_total"),
-            rs.getBoolean("es_regular")
-        );
-    }
 }

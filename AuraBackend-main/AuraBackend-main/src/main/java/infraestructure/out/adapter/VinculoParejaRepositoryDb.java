@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VinculoParejaRepositoryDb implements VinculoParejaRepositoryPort {
+public class VinculoParejaRepositoryDb extends BaseRepositoryDB implements VinculoParejaRepositoryPort {
 
-    private final Connection connection;
     private final VinculoParejaRowMapper mapper = new VinculoParejaRowMapper();
 
-    public VinculoParejaRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public VinculoPareja saveVinculo(VinculoPareja v) {

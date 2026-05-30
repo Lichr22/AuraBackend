@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Scanner;
 
-public class DetalleDeSintoma {
+public class DetalleDeSintoma extends RegistroDetalle {
 
     Scanner sc = new Scanner(System.in);
 
@@ -39,10 +39,12 @@ public class DetalleDeSintoma {
         this.intensidad = intensidad;
     }
 
+    @Override
     public RegistroDiario getRegistroDiario() {
         return registroDiario;
     }
 
+    @Override
     public void setRegistroDiario(RegistroDiario registroDiario) {
         this.registroDiario = registroDiario;
     }
@@ -72,6 +74,22 @@ public class DetalleDeSintoma {
 
         return detalle;
 
+    }
+
+    @Override
+    public int getId() {
+        return idDetalle;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idDetalle = id;
+    }
+
+    @Override
+    public String obtenerResumen() {
+        return "Detalle de Síntoma - " + (sintoma != null ? sintoma.getNombre() : "Síntoma Desconocido") + 
+               " (Intensidad: " + intensidad + "/10)";
     }
 }
 

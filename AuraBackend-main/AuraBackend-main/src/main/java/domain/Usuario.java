@@ -16,6 +16,14 @@ public class Usuario {
     private LocalDateTime fechaRegistro;
     private String estadoCuenta;
 
+    // --- Relación de Agregación (Agregación) ---
+    // Un Usuario tiene un PerfilMenstrual y una lista de Ciclos asociados.
+    // Esta relación es una agregación porque el ciclo de vida de los ciclos y el perfil
+    // depende conceptualmente del usuario, pero el objeto Usuario puede existir
+    // de manera independiente sin tener un perfil o ciclos inicializados.
+    private PerfilMenstrual perfilMenstrual;
+    private List<Ciclo> ciclos;
+
     public Usuario() {
     }
 
@@ -95,6 +103,22 @@ public class Usuario {
 
     public void setEstadoCuenta(String estadoCuenta) {
         this.estadoCuenta = estadoCuenta;
+    }
+
+    public PerfilMenstrual getPerfilMenstrual() {
+        return perfilMenstrual;
+    }
+
+    public void setPerfilMenstrual(PerfilMenstrual perfilMenstrual) {
+        this.perfilMenstrual = perfilMenstrual;
+    }
+
+    public List<Ciclo> getCiclos() {
+        return ciclos;
+    }
+
+    public void setCiclos(List<Ciclo> ciclos) {
+        this.ciclos = ciclos;
     }
 
 

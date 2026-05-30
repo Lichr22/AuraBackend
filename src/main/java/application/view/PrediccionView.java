@@ -13,7 +13,7 @@ public class PrediccionView {
 
     public PrediccionView(PrediccionServiceImplementation service) {
         this.service = service;
-        this.prediccion = prediccion;
+        this.prediccion = new Prediccion();
     }
 
     public void createPrediccion() {

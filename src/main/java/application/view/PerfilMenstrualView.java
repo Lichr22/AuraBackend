@@ -13,7 +13,7 @@ public class PerfilMenstrualView {
 
     public PerfilMenstrualView(PerfilMenstrualServiceImplementation service) {
         this.service = service;
-        this.perfilMenstrual = perfilMenstrual;
+        this.perfilMenstrual = new PerfilMenstrual();
     }
 
     public void createPerfil() {

@@ -13,7 +13,7 @@ public class RegistroDiarioView {
 
     public RegistroDiarioView(RegistroDiarioServiceImplementation service) {
         this.service = service;
-        this.registroDiario = registroDiario;
+        this.registroDiario = new RegistroDiario();
     }
 
     public void createRegistro() {

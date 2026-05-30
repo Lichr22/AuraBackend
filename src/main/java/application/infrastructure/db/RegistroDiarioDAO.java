@@ -3,6 +3,7 @@ package application.infrastructure.db;
 import application.domain.Ciclo;
 import application.domain.RegistroDiario;
 import application.domain.Usuario;
+import application.infrastructure.mapper.RegistroDiarioRowMapper;
 import application.service.port.RegistroDiarioRepositoryPort;
 
 import java.sql.*;
@@ -10,13 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RegistroDiarioDAO implements RegistroDiarioRepositoryPort {
+public class RegistroDiarioDAO extends BaseDAO implements RegistroDiarioRepositoryPort {
 
-    private final Connection connection;
+    private final RegistroDiarioRowMapper mapper = new RegistroDiarioRowMapper();
 
-    public RegistroDiarioDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public RegistroDiario saveRegistroDiario(RegistroDiario registro) {
@@ -61,7 +59,7 @@ public class RegistroDiarioDAO implements RegistroDiarioRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar registro diario: " + e.getMessage(), e);
@@ -74,7 +72,7 @@ public class RegistroDiarioDAO implements RegistroDiarioRepositoryPort {
         List<RegistroDiario> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar registros diarios: " + e.getMessage(), e);
         }
@@ -92,22 +90,4 @@ public class RegistroDiarioDAO implements RegistroDiarioRepositoryPort {
         }
     }
 
-    private RegistroDiario mapear(ResultSet rs) throws SQLException {
-        // Composición: RegistroDiario contiene Usuario y Ciclo (relaciones del req. 9)
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(rs.getInt("id_usuario"));
-
-        Ciclo ciclo = new Ciclo(rs.getInt("id_ciclo"));
-
-        return new RegistroDiario(
-            rs.getInt("id_registro"),
-            usuario,
-            ciclo,
-            rs.getDate("fecha").toLocalDate(),
-            rs.getDouble("temperatura_basal"),
-            rs.getDouble("peso"),
-            rs.getString("calidad_sueno"),
-            rs.getString("notas_libres")
-        );
-    }
 }

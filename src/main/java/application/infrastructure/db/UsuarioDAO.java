@@ -1,6 +1,7 @@
 package application.infrastructure.db;
 
 import application.domain.Usuario;
+import application.infrastructure.mapper.UsuarioRowMapper;
 import application.service.port.UsuarioRepositoryPort;
 
 import java.sql.*;
@@ -8,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UsuarioDAO implements UsuarioRepositoryPort {
+public class UsuarioDAO extends BaseDAO implements UsuarioRepositoryPort {
 
-    private final Connection connection;
+    private final UsuarioRowMapper mapper = new UsuarioRowMapper();
 
-    public UsuarioDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public Usuario saveUsuario(Usuario usuario) {
@@ -58,7 +56,7 @@ public class UsuarioDAO implements UsuarioRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar usuario: " + e.getMessage(), e);
@@ -71,7 +69,7 @@ public class UsuarioDAO implements UsuarioRepositoryPort {
         List<Usuario> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar usuarios: " + e.getMessage(), e);
         }
@@ -89,16 +87,4 @@ public class UsuarioDAO implements UsuarioRepositoryPort {
         }
     }
 
-    private Usuario mapear(ResultSet rs) throws SQLException {
-        return new Usuario(
-            rs.getInt("id_usuario"),
-            rs.getString("nombre"),
-            rs.getString("email"),
-            rs.getString("contrasena_hash"),
-            rs.getString("rol"),
-            rs.getString("codigo_vinculacion"),
-            rs.getTimestamp("fecha_registro").toLocalDateTime(),
-            rs.getString("estado_cuenta")
-        );
-    }
 }

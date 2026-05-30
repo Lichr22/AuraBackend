@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PrediccionRepositoryDb implements PrediccionRepositoryPort {
+public class PrediccionRepositoryDb extends BaseRepositoryDB implements PrediccionRepositoryPort {
 
-    private final Connection connection;
     private final PrediccionRowMapper mapper = new PrediccionRowMapper();
 
-    public PrediccionRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public Prediccion savePrediccion(Prediccion p) {

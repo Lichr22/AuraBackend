@@ -13,7 +13,7 @@ public class ActividadSexualView {
 
     public ActividadSexualView(ActividadSexualServiceImplementation service) {
         this.service = service;
-        this.actividadSexual = actividadSexual;
+        this.actividadSexual = new ActividadSexual();
     }
 
     public void createActividadSexual() {

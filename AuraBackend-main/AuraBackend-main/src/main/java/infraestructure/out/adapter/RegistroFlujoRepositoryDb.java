@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RegistroFlujoRepositoryDb implements RegistroFlujoRepositoryPort {
+public class RegistroFlujoRepositoryDb extends BaseRepositoryDB implements RegistroFlujoRepositoryPort {
 
-    private final Connection connection;
     private final RegistroFlujoRowMapper mapper = new RegistroFlujoRowMapper();
 
-    public RegistroFlujoRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public RegistroFlujo saveRegistroFlujo(RegistroFlujo f) {

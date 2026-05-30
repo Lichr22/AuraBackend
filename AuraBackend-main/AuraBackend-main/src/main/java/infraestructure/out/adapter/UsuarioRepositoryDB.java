@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UsuarioRepositoryDB implements UsuarioRepositoryPort {
+public class UsuarioRepositoryDB extends BaseRepositoryDB implements UsuarioRepositoryPort {
 
-    private final Connection connection;
     private final UsuarioRowMapper mapper = new UsuarioRowMapper();
 
-    public UsuarioRepositoryDB() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public Usuario saveUsuario(Usuario u) {

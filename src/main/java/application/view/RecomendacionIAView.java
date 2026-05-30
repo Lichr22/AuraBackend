@@ -13,7 +13,7 @@ public class RecomendacionIAView {
 
     public RecomendacionIAView(RecomendacionIAServiceImplementation service) {
         this.service = service;
-        this.recomendacionIA = recomendacionIA;
+        this.recomendacionIA = new RecomendacionIA();
     }
 
     public void createRecomendacion() {

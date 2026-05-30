@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PermisosCompartidosRepositoryDb implements PermisosCompartidosRepositoryPort {
+public class PermisosCompartidosRepositoryDb extends BaseRepositoryDB implements PermisosCompartidosRepositoryPort {
 
-    private final Connection connection;
     private final PermisosCompartidosRowMapper mapper = new PermisosCompartidosRowMapper();
 
-    public PermisosCompartidosRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public PermisosCompartidos savePermiso(PermisosCompartidos p) {

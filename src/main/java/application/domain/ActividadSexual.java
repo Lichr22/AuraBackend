@@ -4,7 +4,7 @@ import application.util.FormValidationUtil;
 
 import java.util.List;
 
-public class ActividadSexual {
+public class ActividadSexual extends RegistroDetalle {
 
     private int idActividad;
     private RegistroDiario registroDiario;
@@ -37,8 +37,10 @@ public class ActividadSexual {
 
     public void setIdActividad(int idActividad) { this.idActividad = idActividad; }
 
+    @Override
     public RegistroDiario getRegistroDiario() { return registroDiario; }
 
+    @Override
     public void setRegistroDiario(RegistroDiario registroDiario) { this.registroDiario = registroDiario; }
 
     public Boolean getUsoPreservativo() { return usoPreservativo; }
@@ -104,6 +106,23 @@ public class ActividadSexual {
 
     public void deleteActividadSexual(int id) {
         System.out.println("Actividad sexual con id " + id + " eliminada.");
+    }
+
+    @Override
+    public int getId() {
+        return idActividad;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idActividad = id;
+    }
+
+    @Override
+    public String obtenerResumen() {
+        return "Actividad Sexual - Preservativo: " + (usoPreservativo != null && usoPreservativo ? "Sí" : "No") + 
+               ", Orgasmo: " + (orgasmo != null && orgasmo ? "Sí" : "No") + 
+               ", Método adicional: " + (metodoAdicional != null ? metodoAdicional : "Ninguno");
     }
 
 }

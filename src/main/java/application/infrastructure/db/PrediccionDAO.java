@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.Prediccion;
 import application.domain.Usuario;
+import application.infrastructure.mapper.PrediccionRowMapper;
 import application.service.port.PrediccionRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PrediccionDAO implements PrediccionRepositoryPort {
+public class PrediccionDAO extends BaseDAO implements PrediccionRepositoryPort {
 
-    private final Connection connection;
+    private final PrediccionRowMapper mapper = new PrediccionRowMapper();
 
-    public PrediccionDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public Prediccion savePrediccion(Prediccion prediccion) {
@@ -59,7 +57,7 @@ public class PrediccionDAO implements PrediccionRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar predicción: " + e.getMessage(), e);
@@ -72,7 +70,7 @@ public class PrediccionDAO implements PrediccionRepositoryPort {
         List<Prediccion> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar predicciones: " + e.getMessage(), e);
         }
@@ -90,18 +88,4 @@ public class PrediccionDAO implements PrediccionRepositoryPort {
         }
     }
 
-    private Prediccion mapear(ResultSet rs) throws SQLException {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(rs.getInt("id_usuario"));
-
-        return new Prediccion(
-            rs.getInt("id_prediccion"),
-            usuario,
-            rs.getDate("fecha_calculo").toLocalDate(),
-            rs.getDate("proxima_menstruacion_estimada").toLocalDate(),
-            rs.getDate("inicio_ventana_fertil").toLocalDate(),
-            rs.getDate("fin_ventana_fertil").toLocalDate(),
-            rs.getString("probabilidad_embarazo")
-        );
-    }
 }

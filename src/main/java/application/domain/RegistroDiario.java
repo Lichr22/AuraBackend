@@ -16,6 +16,13 @@ public class RegistroDiario {
     private String calidadSueno;
     private String notasLibres;
 
+    // --- Relación de Composición (Composición) ---
+    // Un RegistroDiario está compuesto por una lista de detalles (RegistroDetalle).
+    // Es una composición porque los detalles (síntomas, flujos, actividad sexual)
+    // no tienen sentido de existir de forma independiente sin el RegistroDiario correspondiente.
+    // Si se elimina el RegistroDiario, sus detalles asociados también se eliminan.
+    private List<RegistroDetalle> detalles;
+
     // Constructors
 
     public RegistroDiario() {
@@ -105,6 +112,14 @@ public class RegistroDiario {
         this.notasLibres = notasLibres;
     }
 
+    public List<RegistroDetalle> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<RegistroDetalle> detalles) {
+        this.detalles = detalles;
+    }
+
     // Methods
 
     public RegistroDiario createRegistro(RegistroDiario registro) {
@@ -161,6 +176,13 @@ public class RegistroDiario {
 
     public void deleteRegistro(int id) {
         System.out.println("Registro con id " + id + " eliminado.");
+    }
+
+    public void imprimirDetallePolimorfico(RegistroDetalle detalle) {
+        if (detalle != null) {
+            System.out.println("--- Procesando Detalle Polimórfico para Registro del " + this.fecha + " ---");
+            System.out.println(detalle.obtenerResumen());
+        }
     }
 
 }

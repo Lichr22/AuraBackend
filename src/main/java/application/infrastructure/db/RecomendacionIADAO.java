@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.RecomendacionIA;
 import application.domain.Usuario;
+import application.infrastructure.mapper.RecomendacionIARowMapper;
 import application.service.port.RecomendacionIARepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RecomendacionIADAO implements RecomendacionIARepositoryPort {
+public class RecomendacionIADAO extends BaseDAO implements RecomendacionIARepositoryPort {
 
-    private final Connection connection;
+    private final RecomendacionIARowMapper mapper = new RecomendacionIARowMapper();
 
-    public RecomendacionIADAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public RecomendacionIA saveRecomendacion(RecomendacionIA recomendacion) {
@@ -54,7 +52,7 @@ public class RecomendacionIADAO implements RecomendacionIARepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar recomendación IA: " + e.getMessage(), e);
@@ -67,7 +65,7 @@ public class RecomendacionIADAO implements RecomendacionIARepositoryPort {
         List<RecomendacionIA> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar recomendaciones IA: " + e.getMessage(), e);
         }
@@ -85,16 +83,4 @@ public class RecomendacionIADAO implements RecomendacionIARepositoryPort {
         }
     }
 
-    private RecomendacionIA mapear(ResultSet rs) throws SQLException {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(rs.getInt("id_usuario"));
-
-        return new RecomendacionIA(
-            rs.getLong("id_recomendacion"),
-            usuario,
-            rs.getString("titulo"),
-            rs.getString("contenido"),
-            rs.getTimestamp("fecha_creacion").toLocalDateTime()
-        );
-    }
 }

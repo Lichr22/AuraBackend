@@ -13,7 +13,7 @@ public class UsuarioView {
 
     public UsuarioView(UsuarioServiceImplementation service) {
         this.service = service;
-        this.usuario = usuario;
+        this.usuario = new Usuario();
     }
 
     public void createUsuario() {

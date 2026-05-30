@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CicloRepositoryDb implements CicloRepositoryPort {
+public class CicloRepositoryDb extends BaseRepositoryDB implements CicloRepositoryPort {
 
-    private final Connection connection;
     private final CicloRowMapper mapper = new CicloRowMapper();
 
-    public CicloRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public Ciclo saveCiclo(Ciclo c) {

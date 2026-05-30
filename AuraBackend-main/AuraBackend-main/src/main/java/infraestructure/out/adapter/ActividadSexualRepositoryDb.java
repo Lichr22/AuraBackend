@@ -10,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ActividadSexualRepositoryDb implements ActividadSexualRepositoryPort {
+public class ActividadSexualRepositoryDb extends BaseRepositoryDB implements ActividadSexualRepositoryPort {
 
-    private final Connection connection;
     private final ActividadSexualRowMapper mapper = new ActividadSexualRowMapper();
 
-    public ActividadSexualRepositoryDb() {
-        this.connection = DataBaseConnectionMySQL.getInstance().getConnection();
-    }
 
     @Override
     public ActividadSexual saveActividadSexual(ActividadSexual a) {

@@ -4,7 +4,7 @@ import application.util.FormValidationUtil;
 
 import java.util.List;
 
-public class RegistroFlujo {
+public class RegistroFlujo extends RegistroDetalle {
 
     private int idFlujo;
     private RegistroDiario registro;
@@ -103,6 +103,31 @@ public class RegistroFlujo {
 
     public void deleteRegistroFlujo(int id) {
         System.out.println("Registro de flujo con id " + id + " eliminado.");
+    }
+
+    @Override
+    public int getId() {
+        return idFlujo;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.idFlujo = id;
+    }
+
+    @Override
+    public RegistroDiario getRegistroDiario() {
+        return registro;
+    }
+
+    @Override
+    public void setRegistroDiario(RegistroDiario registroDiario) {
+        this.registro = registroDiario;
+    }
+
+    @Override
+    public String obtenerResumen() {
+        return "Flujo Menstrual - Textura: " + tipoTextura + ", Color: " + color + ", Cantidad: " + cantidad;
     }
 
 }

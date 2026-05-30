@@ -13,7 +13,7 @@ public class VinculoParejaView {
 
     public VinculoParejaView(VinculoParejaServiceImplementation service) {
         this.service = service;
-        this.vinculoPareja = vinculoPareja;
+        this.vinculoPareja = new VinculoPareja();
     }
 
     public void createVinculo() {

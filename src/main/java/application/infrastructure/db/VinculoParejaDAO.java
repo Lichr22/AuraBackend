@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.Usuario;
 import application.domain.VinculoPareja;
+import application.infrastructure.mapper.VinculoParejaRowMapper;
 import application.service.port.VinculoParejaRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VinculoParejaDAO implements VinculoParejaRepositoryPort {
+public class VinculoParejaDAO extends BaseDAO implements VinculoParejaRepositoryPort {
 
-    private final Connection connection;
+    private final VinculoParejaRowMapper mapper = new VinculoParejaRowMapper();
 
-    public VinculoParejaDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public VinculoPareja saveVinculo(VinculoPareja vinculo) {
@@ -53,7 +51,7 @@ public class VinculoParejaDAO implements VinculoParejaRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar vínculo pareja: " + e.getMessage(), e);
@@ -66,7 +64,7 @@ public class VinculoParejaDAO implements VinculoParejaRepositoryPort {
         List<VinculoPareja> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar vínculos pareja: " + e.getMessage(), e);
         }
@@ -84,20 +82,4 @@ public class VinculoParejaDAO implements VinculoParejaRepositoryPort {
         }
     }
 
-    private VinculoPareja mapear(ResultSet rs) throws SQLException {
-        // Asociación bidireccional: VinculoPareja tiene dos Usuarios (req. 9)
-        Usuario mujer = new Usuario();
-        mujer.setIdUsuario(rs.getInt("id_mujer"));
-
-        Usuario pareja = new Usuario();
-        pareja.setIdUsuario(rs.getInt("id_pareja"));
-
-        return new VinculoPareja(
-            rs.getLong("id_vinculo_pareja"),
-            mujer,
-            pareja,
-            rs.getString("estado_vinculo"),
-            rs.getDate("fecha_vinculacion").toLocalDate()
-        );
-    }
 }

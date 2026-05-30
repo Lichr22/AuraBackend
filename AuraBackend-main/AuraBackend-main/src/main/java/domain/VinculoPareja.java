@@ -5,10 +5,23 @@ import infraestructure.util.FormValidationUtil;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Representa el vínculo entre dos personas.
+ *
+ * --- Relación de Asociación (Asociación) ---
+ * Esta clase demuestra una relación de asociación entre la clase VinculoPareja
+ * y la clase Usuario. Relaciona a dos usuarios independientes (mujer y pareja) que
+ * tienen ciclos de vida separados y pueden existir en el sistema sin necesidad de estar
+ * vinculados.
+ */
 public class VinculoPareja {
 
     Long idVinculoPareja;
+    
+    // Asociación con el Usuario mujer
     Usuario mujer;
+    
+    // Asociación con el Usuario pareja
     Usuario pareja;
     String estadoVinculo;
     LocalDate fechaVinculacion;

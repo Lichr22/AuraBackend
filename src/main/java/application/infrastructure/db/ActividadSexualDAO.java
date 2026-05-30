@@ -2,6 +2,7 @@ package application.infrastructure.db;
 
 import application.domain.ActividadSexual;
 import application.domain.RegistroDiario;
+import application.infrastructure.mapper.ActividadSexualRowMapper;
 import application.service.port.ActividadSexualRepositoryPort;
 
 import java.sql.*;
@@ -9,13 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ActividadSexualDAO implements ActividadSexualRepositoryPort {
+public class ActividadSexualDAO extends BaseDAO implements ActividadSexualRepositoryPort {
 
-    private final Connection connection;
+    private final ActividadSexualRowMapper mapper = new ActividadSexualRowMapper();
 
-    public ActividadSexualDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
-    }
 
     @Override
     public ActividadSexual saveActividadSexual(ActividadSexual actividad) {
@@ -55,7 +53,7 @@ public class ActividadSexualDAO implements ActividadSexualRepositoryPort {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return Optional.of(mapear(rs));
+            if (rs.next()) return Optional.of(mapper.map(rs));
             return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar actividad sexual: " + e.getMessage(), e);
@@ -68,7 +66,7 @@ public class ActividadSexualDAO implements ActividadSexualRepositoryPort {
         List<ActividadSexual> lista = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) lista.add(mapper.map(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Error al listar actividades sexuales: " + e.getMessage(), e);
         }
@@ -86,15 +84,4 @@ public class ActividadSexualDAO implements ActividadSexualRepositoryPort {
         }
     }
 
-    private ActividadSexual mapear(ResultSet rs) throws SQLException {
-        RegistroDiario registroDiario = new RegistroDiario(rs.getInt("id_registro"));
-
-        return new ActividadSexual(
-            rs.getInt("id_actividad"),
-            registroDiario,
-            rs.getBoolean("uso_preservativo"),
-            rs.getBoolean("orgasmo"),
-            rs.getString("metodo_adicional")
-        );
-    }
 }
