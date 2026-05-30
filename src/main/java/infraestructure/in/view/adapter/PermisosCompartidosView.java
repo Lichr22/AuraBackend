@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.PermisosCompartidos;
 import application.PermisosCompartidosServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class PermisosCompartidosView {
     }
 
     public void createPermiso() {
-        service.createPermiso(permisosCompartidos);
+        try {
+            service.createPermiso(permisosCompartidos);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updatePermiso() {
-        service.updatePermiso(permisosCompartidos);
+        try {
+            service.updatePermiso(permisosCompartidos);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getPermisoById() {

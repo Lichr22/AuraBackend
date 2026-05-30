@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.RegistroDiario;
 import application.RegistroDiarioServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class RegistroDiarioView {
     }
 
     public void createRegistro() {
-        service.createRegistro(registroDiario);
+        try {
+            service.createRegistro(registroDiario);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateRegistro() {
-        service.updateRegistro(registroDiario);
+        try {
+            service.updateRegistro(registroDiario);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getRegistroById() {

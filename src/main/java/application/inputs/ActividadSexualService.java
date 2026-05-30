@@ -1,14 +1,15 @@
 package application.inputs;
 
+import application.exceptions.ValidacionException;
 import domain.ActividadSexual;
 
 import java.util.List;
 
 public interface ActividadSexualService {
 
-    ActividadSexual createActividadSexual(ActividadSexual actividad);
+    ActividadSexual createActividadSexual(ActividadSexual actividad) throws ValidacionException;
 
-    ActividadSexual updateActividadSexual(ActividadSexual actividad);
+    ActividadSexual updateActividadSexual(ActividadSexual actividad) throws ValidacionException;
 
     void getActividadSexualById(int id, ActividadSexual actividad);
 

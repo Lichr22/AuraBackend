@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.Usuario;
 import application.UsuarioServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class UsuarioView {
     }
 
     public void createUsuario() {
-        service.createUsuario(usuario);
+        try {
+            service.createUsuario(usuario);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateUsuario() {
-        service.updateUsuario(usuario);
+        try {
+            service.updateUsuario(usuario);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getUsuarioById() {

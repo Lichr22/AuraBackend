@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.RegistroFlujo;
 import application.RegistroFlujoServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class RegistroFlujoView {
     }
 
     public void createRegistroFlujo() {
-        service.createRegistroFlujo(registroFlujo);
+        try {
+            service.createRegistroFlujo(registroFlujo);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateRegistroFlujo() {
-        service.updateRegistroFlujo(registroFlujo);
+        try {
+            service.updateRegistroFlujo(registroFlujo);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getRegistroFlujoById() {

@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.ActividadSexual;
 import application.ActividadSexualServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class ActividadSexualView {
     }
 
     public void createActividadSexual() {
-        service.createActividadSexual(actividadSexual);
+        try {
+            service.createActividadSexual(actividadSexual);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateActividadSexual() {
-        service.updateActividadSexual(actividadSexual);
+        try {
+            service.updateActividadSexual(actividadSexual);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getActividadSexualById() {

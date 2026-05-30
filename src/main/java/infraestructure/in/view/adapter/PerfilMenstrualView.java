@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.PerfilMenstrual;
 import application.PerfilMenstrualServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class PerfilMenstrualView {
     }
 
     public void createPerfil() {
-        service.createPerfil(perfilMenstrual);
+        try {
+            service.createPerfil(perfilMenstrual);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updatePerfil() {
-        service.updatePerfil(perfilMenstrual);
+        try {
+            service.updatePerfil(perfilMenstrual);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getPerfilById() {

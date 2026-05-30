@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.Prediccion;
 import application.PrediccionServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class PrediccionView {
     }
 
     public void createPrediccion() {
-        service.createPrediccion(prediccion);
+        try {
+            service.createPrediccion(prediccion);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updatePrediccion() {
-        service.updatePrediccion(prediccion);
+        try {
+            service.updatePrediccion(prediccion);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getPrediccionById() {

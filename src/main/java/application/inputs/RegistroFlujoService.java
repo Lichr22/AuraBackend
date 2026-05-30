@@ -1,14 +1,15 @@
 package application.inputs;
 
+import application.exceptions.ValidacionException;
 import domain.RegistroFlujo;
 
 import java.util.List;
 
 public interface RegistroFlujoService {
 
-    RegistroFlujo createRegistroFlujo(RegistroFlujo flujo);
+    RegistroFlujo createRegistroFlujo(RegistroFlujo flujo) throws ValidacionException;
 
-    RegistroFlujo updateRegistroFlujo(RegistroFlujo flujo);
+    RegistroFlujo updateRegistroFlujo(RegistroFlujo flujo) throws ValidacionException;
 
     void getRegistroFlujoById(int id, RegistroFlujo flujo);
 

@@ -1,14 +1,15 @@
 package application.inputs;
 
+import application.exceptions.ValidacionException;
 import domain.PermisosCompartidos;
 
 import java.util.List;
 
 public interface PermisosCompartidosService {
 
-    PermisosCompartidos createPermiso(PermisosCompartidos permiso);
+    PermisosCompartidos createPermiso(PermisosCompartidos permiso) throws ValidacionException;
 
-    PermisosCompartidos updatePermiso(PermisosCompartidos permiso);
+    PermisosCompartidos updatePermiso(PermisosCompartidos permiso) throws ValidacionException;
 
     void getPermisoById(Long id, PermisosCompartidos permiso);
 

@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.Ciclo;
 import application.CicloServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class CicloView {
     }
 
     public void createCiclo() {
-        service.createCiclo(ciclo);
+        try {
+            service.createCiclo(ciclo);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateCiclo() {
-        service.updateCiclo(ciclo);
+        try {
+            service.updateCiclo(ciclo);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getCicloById() {

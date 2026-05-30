@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.RecomendacionIA;
 import application.RecomendacionIAServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class RecomendacionIAView {
     }
 
     public void createRecomendacion() {
-        service.createRecomendacion(recomendacionIA);
+        try {
+            service.createRecomendacion(recomendacionIA);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateRecomendacion() {
-        service.updateRecomendacion(recomendacionIA);
+        try {
+            service.updateRecomendacion(recomendacionIA);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getRecomendacionById() {

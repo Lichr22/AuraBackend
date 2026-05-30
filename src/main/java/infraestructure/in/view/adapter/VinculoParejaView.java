@@ -1,5 +1,6 @@
 package infraestructure.in.view.adapter;
 
+import application.exceptions.ValidacionException;
 import domain.VinculoPareja;
 import application.VinculoParejaServiceImplementation;
 import infraestructure.util.FormValidationUtil;
@@ -17,11 +18,19 @@ public class VinculoParejaView {
     }
 
     public void createVinculo() {
-        service.createVinculo(vinculoPareja);
+        try {
+            service.createVinculo(vinculoPareja);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void updateVinculo() {
-        service.updateVinculo(vinculoPareja);
+        try {
+            service.updateVinculo(vinculoPareja);
+        } catch (ValidacionException e) {
+            System.out.println("Error de validación: " + e.getMessage());
+        }
     }
 
     public void getVinculoById() {

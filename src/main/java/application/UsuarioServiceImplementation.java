@@ -1,5 +1,8 @@
 package application;
 
+import application.exceptions.BaseDatosException;
+import application.exceptions.EntidadNoEncontradaException;
+import application.exceptions.ValidacionException;
 import application.inputs.UsuarioService;
 import application.ports.UsuarioRepositoryPort;
 import domain.Usuario;
@@ -15,39 +18,61 @@ public class UsuarioServiceImplementation implements UsuarioService {
     }
 
     @Override
-    public Usuario createUsuario(Usuario usuario) {
+    public Usuario createUsuario(Usuario usuario) throws ValidacionException {
         Usuario filled = usuario.createUser(usuario);
-        return filled != null ? repository.saveUsuario(filled) : null;
+        if (filled == null) throw new ValidacionException("Datos de usuario inválidos.");
+        try {
+            return repository.saveUsuario(filled);
+        } catch (Exception e) {
+            throw new BaseDatosException("Error al guardar usuario.", e);
+        }
     }
 
     @Override
-    public Usuario updateUsuario(Usuario usuario) {
+    public Usuario updateUsuario(Usuario usuario) throws ValidacionException {
         Usuario filled = usuario.updateUser(usuario);
-        return filled != null ? repository.updateUsuario(filled.getIdUsuario(), filled) : null;
+        if (filled == null) throw new ValidacionException("Datos de usuario inválidos para actualizar.");
+        try {
+            return repository.updateUsuario(filled.getIdUsuario(), filled);
+        } catch (Exception e) {
+            throw new BaseDatosException("Error al actualizar usuario.", e);
+        }
     }
 
     @Override
     public void getUsuarioById(int id, Usuario usuario) {
-        repository.findUsuarioById(id)
-                .ifPresentOrElse(
-                        u -> System.out.println("Id: " + u.getIdUsuario() + " | Nombre: " + u.getNombre() + " | Email: " + u.getEmail() + " | Rol: " + u.getRol()),
-                        () -> System.out.println("Usuario con id " + id + " no encontrado.")
-                );
+        try {
+            Usuario u = repository.findUsuarioById(id)
+                    .orElseThrow(() -> new EntidadNoEncontradaException("Usuario", id));
+            System.out.println("Id: " + u.getIdUsuario() + " | Nombre: " + u.getNombre() + " | Email: " + u.getEmail() + " | Rol: " + u.getRol());
+        } catch (EntidadNoEncontradaException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            throw new BaseDatosException("Error al buscar usuario con id " + id, e);
+        }
     }
 
     @Override
     public void getAllUsuarios(List<Usuario> usuarios, Usuario usuario) {
-        List<Usuario> result = repository.findAllUsuarios();
-        if (result.isEmpty()) {
-            System.out.println("No hay usuarios registrados.");
-        } else {
-            result.forEach(u -> System.out.println("[" + u.getIdUsuario() + "] " + u.getNombre() + " - " + u.getEmail() + " - " + u.getRol()));
+        try {
+            List<Usuario> result = repository.findAllUsuarios();
+            if (result.isEmpty()) {
+                System.out.println("No hay usuarios registrados.");
+            } else {
+                result.forEach(u -> System.out.println("[" + u.getIdUsuario() + "] " + u.getNombre() + " - " + u.getEmail() + " - " + u.getRol()));
+            }
+        } catch (Exception e) {
+            throw new BaseDatosException("Error al obtener usuarios.", e);
         }
     }
 
     @Override
     public void deleteUsuario(int id) {
-        repository.deleteUsuarioById(id);
-        System.out.println("Usuario con id " + id + " eliminado.");
+        try {
+            repository.deleteUsuarioById(id);
+            System.out.println("Usuario con id " + id + " eliminado.");
+        } catch (Exception e) {
+            throw new BaseDatosException("Error al eliminar usuario con id " + id, e);
+        }
     }
 }
