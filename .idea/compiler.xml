@@ -9,8 +9,5 @@
         <module name="Aura" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Aura (1)" target="21" />
-    </bytecodeTargetLevel>
   </component>
 </project>
